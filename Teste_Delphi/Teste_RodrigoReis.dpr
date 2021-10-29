@@ -2,15 +2,17 @@ program Teste_RodrigoReis;
 
 uses
   Vcl.Forms,
-  uPrincipal in 'uPrincipal.pas' {Form1},
-  uDm in 'uDm.pas' {DataModule1: TDataModule};
+  uPrincipal in 'uPrincipal.pas' {fPrincipal},
+  uDm in 'uDm.pas' {DM: TDataModule},
+  ModeloCad in 'ModeloCad.pas' {frmModeloCad};
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
-  Application.CreateForm(TDataModule1, DataModule1);
+  Application.CreateForm(TfPrincipal, fPrincipal);
+  Application.CreateForm(TDM, DM);
+  Application.CreateForm(TfrmModeloCad, frmModeloCad);
   Application.Run;
 end.

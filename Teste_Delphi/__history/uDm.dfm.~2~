@@ -1,0 +1,13 @@
+object DataModule1: TDataModule1
+  OldCreateOrder = False
+  Height = 399
+  Width = 645
+  object InterBaseUniProvider1: TInterBaseUniProvider
+    Left = 160
+    Top = 48
+  end
+  object UniConnection1: TUniConnection
+    Left = 152
+    Top = 128
+  end
+end

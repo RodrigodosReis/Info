@@ -1,0 +1,30 @@
+unit uDm;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, Data.DB, DBAccess, Uni, UniProvider,
+  InterBaseUniProvider;
+
+type
+  TOperacaoProj = (opConsulta, opNovo, opDataOut, opNone, opEditar);
+  TDM = class(TDataModule)
+    UniProv: TInterBaseUniProvider;
+    DB: TUniConnection;
+    Trans: TUniTransaction;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  DM: TDM;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+end.
