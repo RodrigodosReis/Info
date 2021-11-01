@@ -10,6 +10,7 @@ inherited fClientes: TfClientes
   inherited PageControl: TPageControl
     Width = 848
     Height = 439
+    ActivePage = TabSheet1
     Font.Charset = ANSI_CHARSET
     Font.Name = 'Tahoma'
     ParentFont = False
@@ -267,7 +268,7 @@ inherited fClientes: TfClientes
         TabOrder = 3
         Text = ''
       end
-      object Edit1: TEdit
+      object EditCodigo: TEdit
         Tag = 5
         Left = 1
         Top = 23
@@ -384,34 +385,6 @@ inherited fClientes: TfClientes
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
-        end
-        object Label64: TLabel
-          Left = 671
-          Top = 181
-          Width = 50
-          Height = 13
-          Caption = 'C'#243'd IBGE'
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          Visible = False
-        end
-        object Label65: TLabel
-          Left = 757
-          Top = 176
-          Width = 54
-          Height = 13
-          Caption = 'Consultar'
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          Visible = False
         end
         object Label86: TLabel
           Left = 490
@@ -546,7 +519,7 @@ inherited fClientes: TfClientes
           Valor = 'REdit1'
           Field = 'BAIRRO'
         end
-        object BitBtn2: TBitBtn
+        object BtnPesqCep: TBitBtn
           Tag = 5
           Left = 75
           Top = 35
@@ -559,9 +532,9 @@ inherited fClientes: TfClientes
           Font.Name = 'MS Sans Serif'
           Font.Style = [fsBold]
           ParentFont = False
-          TabOrder = 10
+          TabOrder = 8
           TabStop = False
-          OnClick = BitBtn2Click
+          OnClick = BtnPesqCepClick
         end
         object EditCidade: TREdit
           Tag = 5
@@ -602,93 +575,6 @@ inherited fClientes: TfClientes
           TabOrder = 6
           Valor = 'REdit1'
           Field = 'BAIRRO'
-        end
-        object EditCodIBGE: TEdit
-          Tag = 5
-          Left = 671
-          Top = 195
-          Width = 65
-          Height = 21
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlack
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          MaxLength = 14
-          ParentFont = False
-          TabOrder = 8
-          Visible = False
-        end
-        object ToolBar11: TToolBar
-          Left = 740
-          Top = 188
-          Width = 28
-          Height = 28
-          Align = alCustom
-          ButtonHeight = 26
-          ButtonWidth = 27
-          TabOrder = 11
-          Visible = False
-          object ToolButton10: TToolButton
-            Tag = 5
-            Left = 0
-            Top = 0
-            Hint = 'Cadastrar'
-            Enabled = False
-            ImageIndex = 0
-            ParentShowHint = False
-            ShowHint = True
-          end
-        end
-        object BitBtn1: TBitBtn
-          Tag = 5
-          Left = 772
-          Top = 193
-          Width = 35
-          Height = 22
-          Hint = 
-            'Clique aqui para consultar em WebService ou '#13#10'abrir o link dos c' +
-            #243'digos de Munic'#237'pios do IBGE!'#13#10'Ser'#225' realizada uma pesquisa pelo ' +
-            'c'#243'digo e nome de cidade'#13#10'e em caso positivo ser'#225' retornado o n'#250'm' +
-            'ero do c'#243'digo e o campo'#13#10'Cidade e em caso negativo, voc'#234' ser'#225' co' +
-            'nduzido a planilha de'#13#10'c'#243'digos de IBGE do pr'#243'prio IBGE!'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          Glyph.Data = {
-            36030000424D3603000000000000360000002800000010000000100000000100
-            1800000000000003000000000000000000000000000000000000C0C0C0C0C0C0
-            C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0
-            C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0BFBFC5C4C4C6C6C6C4C5C5C3
-            C4C4C1C1C1C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0
-            C2C1C1D0D1D0888E8E777B7A8F8686918887B6B3B2C5C5C6C2C2C2C0C0C0C0C0
-            C0C0C0C0C0C0C0C0C0C0C0C0C0C2C1C1BCBDBD33464EB2CBD7F7FFFFFFFFFFFF
-            FDF8CECBC690948DA4A7A6C4C4C5C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0CDCDCE
-            414743CDE4F0C0E3F96C7272797671837A74998B84CBBDB5BFB8ADB1B0B0C1C2
-            C2C0C0C0C0C0C0C0C0C0C1C2C3B9B6AF615A51BCCBD227485DEDF7F6FFFFFFFF
-            FFFFFFFFFFF3E9DDB5A093786757CBCFD2C3C5C5C0C0C0C0C0C0C4C6C89D8773
-            917464524C49EDFFFFE8FEFBECFEF7E5EBE19B988AB8AA99C0B19EBCA58C938B
-            80A89E98C3C5C5C0C0C0C7CBCD7A5742AF81663E2415FFFFFFF9FAFCFFFFFED7
-            CFC72000006027135B18014C0F004913002A0500CFD3D4C0C0C0C6CBCE7A5038
-            CE9373562B11FFFFFFF5F8F8F4F8F6FFFFFDEED5C4612510772F156925055A22
-            00481706CDD2D5C0C0C0C6C9CC7E604AD099798E5537D5B7A4FFFFFFFEFFFFFF
-            FFFFFCF5E35D2E197132126B2E055C28004A1700CDD2D5C0C0C0C0C3C5BFAD9D
-            906145C8917878402E815A48AB85718359445620087E3B1F792E11722608611C
-            004A1700CCD2D5C0C0C0C0C0C0C7CCD17C5F44A57862C18676B4724EA15936A9
-            5B3995492B813E2165260C50110066220C461500CDD3D5C0C0C0C0C0C0BEBFC0
-            D9D9D77B5F497A4A3B9D6F4AA66B49955437723C21341600807463C4B2A52300
-            003D1503CED3D5C0C0C0C0C0C0C0C0C0BEBFC0C7CCCFBEB3AD9A89778166588F
-            6F60A08E85CDD0CDC7CACDC5C9CCBCB4AC180000CFD2D3C0C0C0C0C0C0C0C0C0
-            C0C0C0C0C0C0C1C2C3C4C6C8C6C9CBC5C9CAC3C6C7C0C0C1C0C0C0C0C0C0C0C2
-            C3F0E8E3BDBEBEC0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0
-            C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0BDBEBEC0C0C0C0C0C0}
-          ParentFont = False
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 9
-          Visible = False
         end
         object EditPais: TREdit
           Tag = 5
@@ -782,11 +668,12 @@ inherited fClientes: TfClientes
         TabOrder = 9
       end
       object CkPesq: TCheckBox
+        Tag = 5
         Left = 564
         Top = 70
-        Width = 166
+        Width = 200
         Height = 17
-        Caption = 'Desativar Pesquisa de CEP?'
+        Caption = 'Pesquisar CEP Com ACBr?'
         Font.Charset = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -794,7 +681,6 @@ inherited fClientes: TfClientes
         Font.Style = []
         ParentFont = False
         TabOrder = 6
-        Visible = False
       end
     end
     object TabSheet1: TTabSheet
@@ -804,7 +690,7 @@ inherited fClientes: TfClientes
         Left = 0
         Top = 3
         Width = 837
-        Height = 358
+        Height = 405
         Caption = ' Cadastre o email desejado para realizar envios de emails '
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -814,23 +700,20 @@ inherited fClientes: TfClientes
         ParentFont = False
         TabOrder = 0
         object Label68: TLabel
-          Tag = 5
-          Left = 11
-          Top = 62
+          Left = 12
+          Top = 22
           Width = 82
           Height = 13
           Caption = 'Servidor SMTP'
         end
         object Label69: TLabel
-          Tag = 5
-          Left = 539
-          Top = 61
+          Left = 540
+          Top = 21
           Width = 31
           Height = 13
           Caption = 'Porta'
         end
         object Label70: TLabel
-          Tag = 5
           Left = 12
           Top = 105
           Width = 260
@@ -844,7 +727,6 @@ inherited fClientes: TfClientes
           ParentFont = False
         end
         object Label71: TLabel
-          Tag = 5
           Left = 360
           Top = 104
           Width = 35
@@ -852,7 +734,6 @@ inherited fClientes: TfClientes
           Caption = 'Senha'
         end
         object Label72: TLabel
-          Tag = 5
           Left = 11
           Top = 144
           Width = 145
@@ -860,45 +741,60 @@ inherited fClientes: TfClientes
           Caption = 'Assunto do email enviado'
         end
         object Label73: TLabel
-          Tag = 5
           Left = 9
           Top = 186
           Width = 112
           Height = 13
           Caption = 'Mensagem do Email'
         end
-        object Label9: TLabel
-          Left = 12
-          Top = 21
-          Width = 40
+        object lblDefaultCharset: TLabel
+          Left = 11
+          Top = 308
+          Width = 91
           Height = 13
-          Caption = 'C'#243'digo'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = [fsBold]
-          ParentFont = False
+          Caption = 'Default Charset:'
+          Color = clBtnFace
+          ParentColor = False
+        end
+        object lbl1: TLabel
+          Left = 300
+          Top = 308
+          Width = 69
+          Height = 13
+          Caption = 'IDE Charset:'
+          Color = clBtnFace
+          ParentColor = False
+        end
+        object Label4: TLabel
+          Left = 294
+          Top = 65
+          Width = 110
+          Height = 13
+          Caption = 'Nome para Exibi'#231#227'o'
+        end
+        object Label5: TLabel
+          Left = 12
+          Top = 65
+          Width = 83
+          Height = 13
+          Caption = 'Email de Envio '
         end
         object EditSMTP: TEdit
-          Tag = 5
-          Left = 11
-          Top = 78
+          Left = 12
+          Top = 38
           Width = 522
           Height = 21
           MaxLength = 100
           TabOrder = 0
         end
         object edtSmtpPort: TEdit
-          Tag = 5
-          Left = 539
-          Top = 77
+          Left = 540
+          Top = 37
           Width = 40
           Height = 21
           TabOrder = 1
         end
         object edtSmtpUser: TEdit
-          Tag = 5
           Left = 11
           Top = 120
           Width = 345
@@ -907,7 +803,6 @@ inherited fClientes: TfClientes
           TabOrder = 2
         end
         object edtSmtpPass: TEdit
-          Tag = 5
           Left = 360
           Top = 120
           Width = 220
@@ -916,16 +811,14 @@ inherited fClientes: TfClientes
           TabOrder = 3
         end
         object edtEmailAssunto: TEdit
-          Tag = 5
           Left = 11
           Top = 160
-          Width = 570
+          Width = 806
           Height = 21
           TabOrder = 4
         end
         object cbEmailSSL: TCheckBox
-          Tag = 5
-          Left = 240
+          Left = 603
           Top = 39
           Width = 82
           Height = 17
@@ -933,47 +826,66 @@ inherited fClientes: TfClientes
           TabOrder = 5
         end
         object mmEmailMsg: TMemo
-          Tag = 5
           Left = 9
           Top = 202
-          Width = 571
-          Height = 151
+          Width = 808
+          Height = 94
           TabOrder = 6
         end
-        object EditCodigo: TEdit
-          Tag = 5
-          Left = 12
-          Top = 37
-          Width = 41
-          Height = 21
-          TabStop = False
-          Color = clInactiveBorder
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = [fsBold]
-          ParentFont = False
-          ReadOnly = True
-          TabOrder = 7
-        end
         object cbEmailTLS: TCheckBox
-          Tag = 5
-          Left = 330
+          Left = 693
           Top = 39
           Width = 82
           Height = 17
           Caption = 'Usar TLS ?'
-          TabOrder = 8
+          TabOrder = 7
         end
-        object cbEmailHTML: TCheckBox
-          Tag = 5
-          Left = 421
-          Top = 39
-          Width = 96
-          Height = 17
-          Caption = 'Usar HTML ?'
+        object Button1: TButton
+          Left = 11
+          Top = 368
+          Width = 283
+          Height = 25
+          Caption = 'Salvar Configura'#231#227'o'
+          TabOrder = 8
+          OnClick = BtnSalvarClick
+        end
+        object cbbDefaultCharset: TComboBox
+          Left = 11
+          Top = 327
+          Width = 283
+          Height = 21
+          Style = csDropDownList
           TabOrder = 9
+        end
+        object cbbIdeCharSet: TComboBox
+          Left = 300
+          Top = 328
+          Width = 283
+          Height = 21
+          Style = csDropDownList
+          TabOrder = 10
+        end
+        object btLerConfig: TButton
+          Left = 300
+          Top = 368
+          Width = 283
+          Height = 25
+          Caption = 'Ler Configura'#231#227'o'
+          TabOrder = 11
+        end
+        object Edit2: TEdit
+          Left = 294
+          Top = 81
+          Width = 522
+          Height = 21
+          TabOrder = 12
+        end
+        object Edit1: TEdit
+          Left = 12
+          Top = 81
+          Width = 276
+          Height = 21
+          TabOrder = 13
         end
       end
     end
@@ -983,14 +895,14 @@ inherited fClientes: TfClientes
     end
   end
   inherited Pop: TPopupMenu
-    Left = 463
-    Top = 186
+    Left = 542
+    Top = 205
   end
   inherited ImageList1: TImageList
     Height = 32
     Width = 32
-    Left = 410
-    Top = 186
+    Left = 489
+    Top = 205
     Bitmap = {
       494C010107000800040020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000004000000001002000000000000080
@@ -2057,16 +1969,16 @@ inherited fClientes: TfClientes
   end
   object DataSource: TDataSource
     DataSet = Query
-    Left = 304
-    Top = 186
+    Left = 383
+    Top = 205
   end
   object Query: TUniQuery
     Connection = DM.DB
     SQL.Strings = (
       'select c.* from clientes c'
       'where 1 = 1')
-    Left = 516
-    Top = 186
+    Left = 595
+    Top = 205
     object QueryCODIGO: TIntegerField
       FieldName = 'CODIGO'
       Required = True
@@ -2132,8 +2044,8 @@ inherited fClientes: TfClientes
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
     UpdateOptions.AutoCommitUpdates = True
-    Left = 357
-    Top = 186
+    Left = 436
+    Top = 205
     object QueryMemCODIGO: TIntegerField
       FieldName = 'CODIGO'
       Required = True
@@ -2190,5 +2102,31 @@ inherited fClientes: TfClientes
       FieldName = 'PAIS'
       Size = 50
     end
+  end
+  object ACBrCEP1: TACBrCEP
+    ProxyPort = '8080'
+    ParseText = True
+    WebService = wsViaCep
+    PesquisarIBGE = True
+    OnBuscaEfetuada = ACBrCEP1BuscaEfetuada
+    Left = 224
+    Top = 205
+  end
+  object ACBrIBGE1: TACBrIBGE
+    ProxyPort = '8080'
+    CacheArquivo = 'ACBrIBGE.txt'
+    Left = 277
+    Top = 205
+  end
+  object ACBrMail1: TACBrMail
+    Host = '127.0.0.1'
+    Port = '25'
+    SetSSL = False
+    SetTLS = False
+    Attempts = 3
+    DefaultCharset = UTF_8
+    IDECharset = CP1252
+    Left = 330
+    Top = 205
   end
 end

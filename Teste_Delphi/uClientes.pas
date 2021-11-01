@@ -10,7 +10,8 @@ uses
   Vcl.DBCtrls, SQLComboUni, RComboBox, RxCurrEdit, REdit, RMaskEdit, RxToolEdit,
   SQLCombo, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, ACBrBase, ACBrSocket, ACBrCEP, System.IniFiles,
+  ACBrIBGE, System.TypInfo, ACBrMail;
 
 type
   TfClientes = class(TfrmModeloCad)
@@ -28,7 +29,6 @@ type
     Label71: TLabel;
     Label72: TLabel;
     Label73: TLabel;
-    Label9: TLabel;
     EditSMTP: TEdit;
     edtSmtpPort: TEdit;
     edtSmtpUser: TEdit;
@@ -36,9 +36,7 @@ type
     edtEmailAssunto: TEdit;
     cbEmailSSL: TCheckBox;
     mmEmailMsg: TMemo;
-    EditCodigo: TEdit;
     cbEmailTLS: TCheckBox;
-    cbEmailHTML: TCheckBox;
     Label1: TLabel;
     Label10: TLabel;
     LabelDoc2: TLabel;
@@ -46,7 +44,7 @@ type
     Label42: TLabel;
     EditRG: TEdit;
     MaskEditCPF: TMaskEdit;
-    Edit1: TEdit;
+    EditCodigo: TEdit;
     EditNome: TEdit;
     GroupBox1: TGroupBox;
     Label14: TLabel;
@@ -55,21 +53,15 @@ type
     Label24: TLabel;
     Label25: TLabel;
     Label26: TLabel;
-    Label64: TLabel;
-    Label65: TLabel;
     Label86: TLabel;
     MaskEditCEP: TRMaskEdit;
     EditEndereco: TREdit;
     EditNumero: TREdit;
     EditComplemento: TREdit;
     EditBairro: TREdit;
-    BitBtn2: TBitBtn;
+    BtnPesqCep: TBitBtn;
     EditCidade: TREdit;
     EditUF: TREdit;
-    EditCodIBGE: TEdit;
-    ToolBar11: TToolBar;
-    ToolButton10: TToolButton;
-    BitBtn1: TBitBtn;
     EditPais: TREdit;
     MaskEditTelCel: TRMaskEdit;
     EditEmail: TRMaskEdit;
@@ -106,6 +98,19 @@ type
     QueryMemCIDADE: TStringField;
     QueryMemUF: TStringField;
     QueryMemPAIS: TStringField;
+    ACBrCEP1: TACBrCEP;
+    ACBrIBGE1: TACBrIBGE;
+    ACBrMail1: TACBrMail;
+    lblDefaultCharset: TLabel;
+    lbl1: TLabel;
+    Button1: TButton;
+    cbbDefaultCharset: TComboBox;
+    cbbIdeCharSet: TComboBox;
+    btLerConfig: TButton;
+    Label4: TLabel;
+    Edit2: TEdit;
+    Label5: TLabel;
+    Edit1: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure ToolButton1Click(Sender: TObject);
     procedure BtnNovoClick(Sender: TObject);
@@ -127,14 +132,18 @@ type
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure BtnVoltarClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
-    procedure BitBtn2Click(Sender: TObject);
+    procedure BtnPesqCepClick(Sender: TObject);
+    procedure ACBrCEP1BuscaEfetuada(Sender: TObject);
     // Fim Override
-
 
   private
     { Private declarations }
 
     fCEPAtual: Integer;
+
+//    procedure AjustaParametrosDeEnvio;
+//    procedure LerConfiguracao;
+    procedure GravarConfiguracao;
 
   public
     { Public declarations }
@@ -149,7 +158,33 @@ uses uDm;
 
 {$R *.dfm}
 
-procedure TfClientes.BitBtn2Click(Sender: TObject);
+procedure TfClientes.GravarConfiguracao;
+var
+  IniFile: string;
+  Ini: TIniFile;
+begin
+  IniFile := ChangeFileExt(Application.ExeName, '.ini');
+  Ini := TIniFile.Create(IniFile);
+  try
+{
+    Ini.WriteString('Email', 'From', edtFrom.text);
+    Ini.WriteString('Email', 'FromName', edtFromName.text);
+    Ini.WriteString('Email', 'Host', edtHost.text);
+    Ini.WriteString('Email', 'Port', edtPort.text);
+    Ini.WriteString('Email', 'User', edtUser.text);
+    Ini.WriteString('Email', 'Pass', edtPassword.text);
+    Ini.WriteBool('Email', 'TLS', chkTLS.Checked);
+    Ini.WriteBool('Email', 'SSL', chkSSL.Checked);
+    Ini.WriteInteger('Email', 'DefaultCharset', cbbDefaultCharset.ItemIndex);
+    Ini.WriteInteger('Email', 'IdeCharset', cbbIdeCharSet.ItemIndex);
+}
+  finally
+    Ini.Free;
+  end;
+
+end;
+
+procedure TfClientes.BtnPesqCepClick(Sender: TObject);
 var
   CEP: string;
   Endereco: TStringList;
@@ -177,16 +212,53 @@ begin
     inherited
   else
   begin
-    Endereco := DM.BuscarCEPNoViaCEP(CEP);
-    if Endereco.Count = 5 then // Checar se realmente foi recebido 5 valores.
+    if CkPesq.Checked = False then
     begin
-      EditEndereco.Text := Endereco[0];
-      EditBairro.Text := Endereco[1];
-      EditUF.Text := Endereco[2];
-      EditCidade.Text := Endereco[3];
-      EditComplemento.Text := Endereco[4];
+      Endereco := DM.BuscarCEPNoViaCEP(CEP);
+      if Endereco.Count = 5 then // Checar se realmente foi recebido 5 valores.
+      begin
+        EditEndereco.Text := Endereco[0];
+        EditBairro.Text := Endereco[1];
+        EditUF.Text := Endereco[2];
+        EditCidade.Text := Endereco[3];
+        EditComplemento.Text := Endereco[4];
+      end;
+    end
+    else
+    begin
+      try
+         ACBrCEP1.BuscarPorCEP(CEP);
+      except
+         On E : Exception do
+         begin
+            ShowMessage(E.Message);
+         end ;
+      end ;
     end;
   end;
+end;
+
+procedure TfClientes.ACBrCEP1BuscaEfetuada(Sender: TObject);
+var
+  I : Integer ;
+begin
+  if ACBrCEP1.Enderecos.Count < 1 then
+     ShowMessage( 'Nenhum Endereço encontrado' )
+  else
+   begin
+     For I := 0 to ACBrCEP1.Enderecos.Count-1 do
+     begin
+       with ACBrCEP1.Enderecos[I] do
+       begin
+          EditEndereco.Text := Tipo_Logradouro+ ' ' +Logradouro ;
+          EditComplemento.Text := Complemento ;
+          EditBairro.Text := Bairro ;
+          EditCidade.Text := Municipio;
+          EditUF.Text := UF;
+       end ;
+     end ;
+   end ;
+
 end;
 
 procedure TfClientes.BtnNovoClick(Sender: TObject);
@@ -197,8 +269,16 @@ begin
 end;
 
 procedure TfClientes.FormCreate(Sender: TObject);
+var
+  m: TMailCharset;
 begin
   inherited;
+  cbbDefaultCharset.Items.Clear;
+  for m := Low(TMailCharset) to High(TMailCharset) do
+    cbbDefaultCharset.Items.Add(GetEnumName(TypeInfo(TMailCharset), integer(m)));
+  cbbDefaultCharset.ItemIndex := 0;
+  cbbIdeCharSet.Items.Assign(cbbDefaultCharset.Items);
+  cbbIdeCharSet.ItemIndex := 0;
   FCodModulo := 1;
   FKey[1]:= 'CODIGO';
   FKey[2]:= 'EMPRESA';
@@ -359,6 +439,11 @@ end;
 function TfClientes.CreateSelect: String;
 var S: String;
 begin
+
+  // No teste, uso com Unidac, uma única persistencia! Isso é quebra de padrão!
+  // O padrão usual de uma persistencia pra listagem e outra pro registro,
+  // poderia ser utilizado, mas mantive a simplicidade e clareza para o teste, com um unico DataSet
+
   S := ' ';
   S := ' select c.* from clientes c ' +
   ' where 1 = 1 ';

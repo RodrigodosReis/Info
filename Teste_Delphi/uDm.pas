@@ -25,7 +25,7 @@ type
     function GetValue(SQL: string; ResultField: string): string;
     function DBFormat(Value: string; DataType: TDBFormat): string;
     function HavePermission(CodModulo, CodFuncao: Integer): Boolean;
-    function BuscarCEPNoViaCEP(UmCEP: string): TStringList;
+    function BuscarCEPNoViaCEP(vCEP: string): TStringList;
   end;
 
 var
@@ -277,7 +277,7 @@ begin
   end;
 end;
 
-function TDM.BuscarCEPNoViaCEP(UmCEP: string): TStringList;
+function TDM.BuscarCEPNoViaCEP(vCEP: string): TStringList;
 var
   data: TJSONObject;
   RESTClient: TRESTClient;
@@ -290,7 +290,7 @@ begin
   RESTResponse := TRESTResponse.Create(nil);
   RESTRequest.Client := RESTClient;
   RESTRequest.Response := RESTResponse;
-  RESTClient.BaseURL := 'https://viacep.com.br/ws/' + UmCEP + '/json';
+  RESTClient.BaseURL := 'https://viacep.com.br/ws/' + vCEP + '/json';
   RESTRequest.Execute;
   data := RESTResponse.JSONValue as TJSONObject;
   try
