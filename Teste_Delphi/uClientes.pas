@@ -127,11 +127,15 @@ type
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure BtnVoltarClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure BitBtn2Click(Sender: TObject);
     // Fim Override
 
 
   private
     { Private declarations }
+
+    fCEPAtual: Integer;
+
   public
     { Public declarations }
   end;
@@ -144,6 +148,46 @@ implementation
 uses uDm;
 
 {$R *.dfm}
+
+procedure TfClientes.BitBtn2Click(Sender: TObject);
+var
+  CEP: string;
+  Endereco: TStringList;
+  CEPValido, CEPFoiMudado: Boolean;
+  NovoCEP: Integer;
+begin
+  CEPValido := True;
+  CEPFoiMudado := False;
+  CEP := MaskEditCEP.Text;
+  CEP := StringReplace(CEP, '.', '', [rfReplaceAll]);
+  CEP := StringReplace(CEP, '-', '', [rfReplaceAll]);
+  try
+    NovoCEP := StrToInt(CEP);
+    if fCEPAtual <> NovoCEP then
+    begin
+      fCEPAtual := NovoCEP;
+      CEPFoiMudado := True;
+    end;
+  except
+    on Exception do
+      CEPValido := False;
+  end;
+
+  if (not CEPFoiMudado) and ((not CEPValido) or (EditBairro.Text <> '') or (EditEndereco.Text <> '')) then
+    inherited
+  else
+  begin
+    Endereco := DM.BuscarCEPNoViaCEP(CEP);
+    if Endereco.Count = 5 then // Checar se realmente foi recebido 5 valores.
+    begin
+      EditEndereco.Text := Endereco[0];
+      EditBairro.Text := Endereco[1];
+      EditUF.Text := Endereco[2];
+      EditCidade.Text := Endereco[3];
+      EditComplemento.Text := Endereco[4];
+    end;
+  end;
+end;
 
 procedure TfClientes.BtnNovoClick(Sender: TObject);
 begin
@@ -250,7 +294,7 @@ begin
   EditBairro.Clear;
   EditCidade.Clear;
   EditUF.Clear;
-  EditPais.Clear;
+  EditPais.Text := 'BRASIL';
 
   // Sem clean code no exemplo, porém o form de herança possui algum clean code
   // Aqui é possível resolver com um for e limpar os componentes, porém, mantive o

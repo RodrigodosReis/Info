@@ -561,6 +561,7 @@ inherited fClientes: TfClientes
           ParentFont = False
           TabOrder = 10
           TabStop = False
+          OnClick = BitBtn2Click
         end
         object EditCidade: TREdit
           Tag = 5
