@@ -106,7 +106,6 @@ type
     QueryMemCIDADE: TStringField;
     QueryMemUF: TStringField;
     QueryMemPAIS: TStringField;
-    BtnVoltar: TToolButton;
     procedure FormCreate(Sender: TObject);
     procedure ToolButton1Click(Sender: TObject);
     procedure BtnNovoClick(Sender: TObject);
@@ -232,6 +231,21 @@ begin
   MaskEditCPF.Clear;
   MaskEditTelCel.Clear;
   EditEmail.Clear;
+  CkPesq.Checked := False;
+  MaskEditCEP.Clear;
+  EditEndereco.Clear;
+  EditNumero.Clear;
+  EditComplemento.Clear;
+  EditBairro.Clear;
+  EditCidade.Clear;
+  EditUF.Clear;
+  EditPais.Clear;
+
+  // Sem clean code no exemplo, porém o form de herança possui algum clean code
+  // Aqui é possível resolver com um for e limpar os componentes, porém, mantive o
+  // código desssa forma pra manter a simplicidade de entendimento para o teste
+  // Mantive inclusive alguns comentários, mas obviamente, não são necessários
+  // principalmente em um ambiente de controle de versionamento
 
 
 end;
@@ -241,9 +255,21 @@ begin
   inherited;
 
   FKeyValue[1] := Query.FieldByName('CODIGO').AsString;
-//  FKeyValue[2] := Query.FieldByName('EMPRESA').AsString;
+//  FKeyValue[2] := Query.FieldByName('EMPRESA').AsString;    // Caso se use chave composta
   EditCodigo.Text := Query.FieldByName('CODIGO').AsString;
   EditNome.Text := Query.FieldByName('NOME').AsString;
+  EditRG.Text := Query.FieldByName('RG').AsString;
+  MaskEditCPF.Text := Query.FieldByName('CPF').AsString;
+  MaskEditTelCel.Text := Query.FieldByName('TELEFONE').AsString;
+  EditEmail.Text := Query.FieldByName('EMAIL').AsString;
+  MaskEditCEP.Text := Query.FieldByName('CEP').AsString;
+  EditEndereco.Text := Query.FieldByName('LOGRADOURO').AsString;
+  EditNumero.Text := Query.FieldByName('NUMERO').AsString;
+  EditComplemento.Text := Query.FieldByName('COMPLEMENTO').AsString;
+  EditBairro.Text := Query.FieldByName('BAIRRO').AsString;
+  EditCidade.Text := Query.FieldByName('CIDADE').AsString;
+  EditUF.Text := Query.FieldByName('UF').AsString;
+  EditPais.Text := Query.FieldByName('PAIS').AsString;
 
 end;
 
@@ -256,10 +282,22 @@ function TfClientes.CreateInsert: String;
 var Preview, Imp_1_Linha: Integer;
 begin
 
-  Result :=  ' INSERT INTO CLIENTES (CODIGO, NOME) ' +
+  Result := ' INSERT INTO CLIENTES (CODIGO, NOME, RG, CPF, TELEFONE, EMAIL, CEP ' +
+            ' LOGRADOURO, NUMERO, COMPLEMENTO, BAIRRO, CIDADE, UF, PAIS) ' +
             ' VALUES ( ' +
             ' (SELECT COALESCE(MAX(CODIGO),0) + 1 FROM CLIENTES), ' +
-            DM.DBFormat(EditNome.Text,dbTexto) + ')';
+            DM.DBFormat(EditNome.Text,dbTexto) + ',' +
+            DM.DBFormat(EditRG.Text,dbTexto) + ',' +
+            DM.DBFormat(MaskEditCPF.Text,dbTexto) + ',' +
+            DM.DBFormat(MaskEditTelCel.Text,dbTexto) + ',' +
+            DM.DBFormat(MaskEditCEP.Text,dbTexto) + ',' +
+            DM.DBFormat(EditEndereco.Text,dbTexto) + ',' +
+            DM.DBFormat(EditNumero.Text,dbTexto) + ',' +
+            DM.DBFormat(EditComplemento.Text,dbTexto) + ',' +
+            DM.DBFormat(EditBairro.Text,dbTexto) + ',' +
+            DM.DBFormat(EditCidade.Text,dbTexto) + ',' +
+            DM.DBFormat(EditUF.Text,dbTexto) + ',' +
+            DM.DBFormat(EditPais.Text,dbTexto) + ')';
 
 end;
 

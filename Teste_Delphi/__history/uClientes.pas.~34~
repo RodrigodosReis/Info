@@ -125,6 +125,7 @@ type
     procedure EditPesqKeyPress(Sender: TObject; var Key: Char);
     procedure DBGridDadosTercDrawColumnCell(Sender: TObject; const Rect: TRect;
       DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure BtnVoltarClick(Sender: TObject);
     // Fim Override
 
 
@@ -176,6 +177,16 @@ end;
 function TfClientes.VerifyReqFields: Boolean;
 begin
   Result := True;
+end;
+
+procedure TfClientes.BtnVoltarClick(Sender: TObject);
+begin
+  inherited;
+  try
+     PageControl.ActivePageIndex := 0;
+  except
+
+  end;
 end;
 
 procedure TfClientes.ClearPesqFields;

@@ -123,6 +123,9 @@ type
     procedure Limpar; override;
     procedure ComboBoxPesqPorChange(Sender: TObject);
     procedure EditPesqKeyPress(Sender: TObject; var Key: Char);
+    procedure DBGridDadosTercDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure BtnVoltarClick(Sender: TObject);
     // Fim Override
 
 
@@ -176,6 +179,16 @@ begin
   Result := True;
 end;
 
+procedure TfClientes.BtnVoltarClick(Sender: TObject);
+begin
+  inherited;
+  try
+     PageControl.ActivePageIndex := 0;
+  except
+
+  end;
+end;
+
 procedure TfClientes.ClearPesqFields;
 begin
   inherited;
@@ -214,6 +227,23 @@ begin
 
 //  EditCodigo.Clear;
   EditNome.Clear;
+  EditRG.Clear;
+  MaskEditCPF.Clear;
+  MaskEditTelCel.Clear;
+  EditEmail.Clear;
+  CkPesq.Checked := False;
+  MaskEditCEP.Clear;
+  EditEndereco.Clear;
+  EditNumero.Clear;
+  EditComplemento.Clear;
+  EditBairro.Clear;
+  EditCidade.Clear;
+  EditUF.Clear;
+  EditPais.Clear;
+
+  // Sem clean code no exemplo, porém o form de herança possui algum clean code
+  // Aqui é possível resolver com um for e limpar os componentes, porém, mantive o
+  // código desssa forma pra manter a simplicidade de entendimento para o teste
 
 
 end;
@@ -223,7 +253,7 @@ begin
   inherited;
 
   FKeyValue[1] := Query.FieldByName('CODIGO').AsString;
-  FKeyValue[2] := Query.FieldByName('EMPRESA').AsString;
+//  FKeyValue[2] := Query.FieldByName('EMPRESA').AsString;    // Caso se use chave composta
   EditCodigo.Text := Query.FieldByName('CODIGO').AsString;
   EditNome.Text := Query.FieldByName('NOME').AsString;
 
@@ -241,8 +271,7 @@ begin
   Result :=  ' INSERT INTO CLIENTES (CODIGO, NOME) ' +
             ' VALUES ( ' +
             ' (SELECT COALESCE(MAX(CODIGO),0) + 1 FROM CLIENTES), ' +
-            DM.DBFormat(IntTostr(1),dbInt) + ',' +
-            DM.DBFormat(EditNome.Text,dbTexto) + ',' + ')';
+            DM.DBFormat(EditNome.Text,dbTexto) + ')';
 
 end;
 
@@ -273,5 +302,17 @@ begin
 
 end;
 
+
+procedure TfClientes.DBGridDadosTercDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  inherited;
+  if (gdSelected in State) then
+    DBGridDadosTerc.Canvas.Brush.Color := clskyblue;
+  DBGridDadosTerc.Canvas.Font.Style := [];
+  DBGridDadosTerc.Canvas.Font.Color := clwindowtext;
+  DBGridDadosTerc.Canvas.FillRect(Rect);
+  DBGridDadosTerc.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+end;
 
 end.
