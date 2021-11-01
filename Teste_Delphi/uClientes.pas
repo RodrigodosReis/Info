@@ -8,7 +8,9 @@ uses
   Vcl.ImgList, Vcl.Menus, Vcl.ComCtrls, Vcl.ToolWin, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.Mask, MemDS, DBAccess, Uni,
   Vcl.DBCtrls, SQLComboUni, RComboBox, RxCurrEdit, REdit, RMaskEdit, RxToolEdit,
-  SQLCombo;
+  SQLCombo, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
 
 type
   TfClientes = class(TfrmModeloCad)
@@ -17,63 +19,6 @@ type
     EditPesq: TMaskEdit;
     DataSource: TDataSource;
     Query: TUniQuery;
-    QueryCODIGO: TIntegerField;
-    QueryEMPRESA: TIntegerField;
-    QueryMODELO: TIntegerField;
-    QuerySUBSERIE: TIntegerField;
-    QueryDATA_EMISSAO: TDateField;
-    QueryHORA_EMISSAO: TTimeField;
-    QueryCOD_NAT_OP: TIntegerField;
-    QueryMODAL_CTE: TIntegerField;
-    QueryTIPO_SERVICO: TIntegerField;
-    QueryFINALIDADE: TIntegerField;
-    QueryFORMA_EMISSAO: TIntegerField;
-    QueryFORMA_PAGTO: TIntegerField;
-    QueryID_CID_EMISSAO: TIntegerField;
-    QueryID_CID_INI_PREST: TIntegerField;
-    QueryID_CID_FIM_PREST: TIntegerField;
-    QuerySITUACAO: TIntegerField;
-    QueryRECEB_CTE: TIntegerField;
-    QueryIDENT_TOMADOR: TIntegerField;
-    QueryCOD_TOMADOR: TIntegerField;
-    QueryIDENT_REMETENTE: TIntegerField;
-    QueryCOD_REMETENTE: TIntegerField;
-    QueryIDENT_EXPEDIDOR: TIntegerField;
-    QueryCOD_EXPEDIDOR: TIntegerField;
-    QueryIDENT_RECEBEDOR: TIntegerField;
-    QueryCOD_RECEBEDOR: TIntegerField;
-    QueryIDENT_DESTINATARIO: TIntegerField;
-    QueryCOD_DESTINATARIO: TIntegerField;
-    QueryRETIRADA: TIntegerField;
-    QueryCID_EMISSAO: TStringField;
-    QueryCID_INI_PREST: TStringField;
-    QueryCID_FIM_PREST: TStringField;
-    QueryDESC_TOMADOR: TStringField;
-    QueryDESC_REMETENTE: TStringField;
-    QueryDESC_EXPEDIDOR: TStringField;
-    QueryDESC_RECEBEDOR: TStringField;
-    QueryDESC_DESTINATARIO: TStringField;
-    QueryVALOR_CARGA: TFloatField;
-    QueryPROD_PREDOMINANTE: TStringField;
-    QueryDESC_MODAL: TStringField;
-    QueryDESC_PAGTO: TStringField;
-    QueryDESC_TIPO_SERVICO: TStringField;
-    QueryRNTRC: TStringField;
-    QueryDATA_ENTREGA: TDateField;
-    QueryIND_LOT: TIntegerField;
-    QueryCIOT: TStringField;
-    QueryTAF: TStringField;
-    QueryN_REG_EST: TStringField;
-    QueryOBS: TStringField;
-    QuerySTATUS_CTE: TIntegerField;
-    QueryCONTINGENCIA: TIntegerField;
-    QueryCTE_CHAVE: TStringField;
-    QueryCTE_ALEATORIO: TStringField;
-    QueryCTE_RECIBO: TStringField;
-    QueryCTE_PROTOCOLO: TStringField;
-    QueryDESC_STATUS: TStringField;
-    QueryFIM_CONTINGENCIA: TIntegerField;
-    QueryDESC_STATUS_CLI: TStringField;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
     GrEmail: TGroupBox;
@@ -84,7 +29,7 @@ type
     Label72: TLabel;
     Label73: TLabel;
     Label9: TLabel;
-    EditNome: TEdit;
+    EditSMTP: TEdit;
     edtSmtpPort: TEdit;
     edtSmtpUser: TEdit;
     edtSmtpPass: TEdit;
@@ -102,7 +47,7 @@ type
     EditRG: TEdit;
     MaskEditCPF: TMaskEdit;
     Edit1: TEdit;
-    Edit2: TEdit;
+    EditNome: TEdit;
     GroupBox1: TGroupBox;
     Label14: TLabel;
     Label22: TLabel;
@@ -125,15 +70,65 @@ type
     ToolBar11: TToolBar;
     ToolButton10: TToolButton;
     BitBtn1: TBitBtn;
-    EdPonto: TREdit;
+    EditPais: TREdit;
     MaskEditTelCel: TRMaskEdit;
     EditEmail: TRMaskEdit;
     BtnEmail: TBitBtn;
     CkPesq: TCheckBox;
     Label2: TLabel;
     Label3: TLabel;
+    QueryCODIGO: TIntegerField;
+    QueryNOME: TStringField;
+    QueryRG: TStringField;
+    QueryCPF: TStringField;
+    QueryTELEFONE: TStringField;
+    QueryEMAIL: TStringField;
+    QueryLOGRADOURO: TStringField;
+    QueryNUMERO: TStringField;
+    QueryCEP: TStringField;
+    QueryCOMPLEMENTO: TStringField;
+    QueryBAIRRO: TStringField;
+    QueryCIDADE: TStringField;
+    QueryUF: TStringField;
+    QueryPAIS: TStringField;
+    QueryMem: TFDMemTable;
+    QueryMemCODIGO: TIntegerField;
+    QueryMemNOME: TStringField;
+    QueryMemRG: TStringField;
+    QueryMemCPF: TStringField;
+    QueryMemTELEFONE: TStringField;
+    QueryMemEMAIL: TStringField;
+    QueryMemLOGRADOURO: TStringField;
+    QueryMemNUMERO: TStringField;
+    QueryMemCEP: TStringField;
+    QueryMemCOMPLEMENTO: TStringField;
+    QueryMemBAIRRO: TStringField;
+    QueryMemCIDADE: TStringField;
+    QueryMemUF: TStringField;
+    QueryMemPAIS: TStringField;
     procedure FormCreate(Sender: TObject);
     procedure ToolButton1Click(Sender: TObject);
+    procedure BtnNovoClick(Sender: TObject);
+
+    // OVERRIDE
+    function VerifyReqFields: Boolean; override;
+    function CreateSelect: String; override;
+    function CreateInsert: String; override;
+    function CreateUpdate: String; override;
+    function CreateDelete: String; override;
+    procedure SetCodField; override;
+    procedure CompleteCampos; override;
+    procedure SetDefValues; override;
+    procedure ClearPesqFields; override;
+    procedure Limpar; override;
+    procedure ComboBoxPesqPorChange(Sender: TObject);
+    procedure EditPesqKeyPress(Sender: TObject; var Key: Char);
+    procedure DBGridDadosTercDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure BtnVoltarClick(Sender: TObject);
+    // Fim Override
+
+
   private
     { Private declarations }
   public
@@ -148,6 +143,13 @@ implementation
 uses uDm;
 
 {$R *.dfm}
+
+procedure TfClientes.BtnNovoClick(Sender: TObject);
+begin
+  inherited;
+   if EditNome.CanFocus then
+      EditNome.SetFocus;
+end;
 
 procedure TfClientes.FormCreate(Sender: TObject);
 begin
@@ -165,6 +167,139 @@ procedure TfClientes.ToolButton1Click(Sender: TObject);
 begin
   inherited;
   Close;
+end;
+
+procedure TfClientes.SetCodField;
+begin
+  EditCodigo.Text:= FKeyValue[1];
+end;
+
+function TfClientes.VerifyReqFields: Boolean;
+begin
+  Result := True;
+end;
+
+procedure TfClientes.BtnVoltarClick(Sender: TObject);
+begin
+  inherited;
+  try
+     PageControl.ActivePageIndex := 0;
+  except
+
+  end;
+end;
+
+procedure TfClientes.ClearPesqFields;
+begin
+  inherited;
+  EditPesq.Text := '';
+end;
+
+procedure TfClientes.ComboBoxPesqPorChange(Sender: TObject);
+begin
+  inherited;
+  EditPesq.Text := '';
+
+  if ComboBoxPesqPor.ItemIndex = 1 then
+    EditPesq.OnKeyPress:= EditPesqKeyPress
+  else
+    EditPesq.OnKeyPress:= nil;
+end;
+
+procedure TfClientes.EditPesqKeyPress(Sender: TObject; var Key: Char);
+begin
+  inherited;
+  if ((Key < '0') or (Key > '9')) and (Key <> #8) then
+     Key:= #0;
+end;
+
+procedure TfClientes.SetDefValues;
+begin
+  inherited;
+
+  ComboBoxPesqPorChange(ComboBoxPesqPor);
+
+end;
+
+procedure TfClientes.Limpar;
+begin
+  inherited;
+
+//  EditCodigo.Clear;
+  EditNome.Clear;
+  EditRG.Clear;
+  MaskEditCPF.Clear;
+  MaskEditTelCel.Clear;
+  EditEmail.Clear;
+
+
+end;
+
+procedure TfClientes.CompleteCampos;
+begin
+  inherited;
+
+  FKeyValue[1] := Query.FieldByName('CODIGO').AsString;
+//  FKeyValue[2] := Query.FieldByName('EMPRESA').AsString;
+  EditCodigo.Text := Query.FieldByName('CODIGO').AsString;
+  EditNome.Text := Query.FieldByName('NOME').AsString;
+
+end;
+
+function TfClientes.CreateDelete: String;
+begin
+  Result:= ' DELETE FROM CLIENTES WHERE CODIGO = ' + IntToStr(FKeyValue[1]);
+end;
+
+function TfClientes.CreateInsert: String;
+var Preview, Imp_1_Linha: Integer;
+begin
+
+  Result :=  ' INSERT INTO CLIENTES (CODIGO, NOME) ' +
+            ' VALUES ( ' +
+            ' (SELECT COALESCE(MAX(CODIGO),0) + 1 FROM CLIENTES), ' +
+            DM.DBFormat(EditNome.Text,dbTexto) + ')';
+
+end;
+
+function TfClientes.CreateSelect: String;
+var S: String;
+begin
+  S := ' ';
+  S := ' select c.* from clientes c ' +
+  ' where 1 = 1 ';
+
+  if EditPesq.Text <> '' then
+  begin
+    case ComboBoxPesqPor.ItemIndex of
+      1: S := S + ' and c.codigo = ' + EditPesq.Text + ' ';
+    end;
+  end;
+  Result:= S + ' order by c.codigo ';
+end;
+
+function TfClientes.CreateUpdate: String;
+var Preview, Imp_1_Linha: Integer;
+begin
+
+  Result:= ' UPDATE CLIENTES SET ' +
+           ' NOME = ' + DM.DBFormat(EditNome.Text,dbTexto) + ',' +
+           ' ITEM_1_LINHA = ' + DM.DBFormat(IntToStr(Imp_1_Linha),dbInt) +
+           ' WHERE CODIGO = ' + IntToStr(FKeyValue[1]);
+
+end;
+
+
+procedure TfClientes.DBGridDadosTercDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+  inherited;
+  if (gdSelected in State) then
+    DBGridDadosTerc.Canvas.Brush.Color := clskyblue;
+  DBGridDadosTerc.Canvas.Font.Style := [];
+  DBGridDadosTerc.Canvas.Font.Color := clwindowtext;
+  DBGridDadosTerc.Canvas.FillRect(Rect);
+  DBGridDadosTerc.DefaultDrawColumnCell(Rect, DataCol, Column, State);
 end;
 
 end.

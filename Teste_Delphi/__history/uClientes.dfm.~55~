@@ -10,7 +10,6 @@ inherited fClientes: TfClientes
   inherited PageControl: TPageControl
     Width = 848
     Height = 439
-    ActivePage = TabCadastro
     Font.Charset = ANSI_CHARSET
     Font.Name = 'Tahoma'
     ParentFont = False
@@ -33,11 +32,34 @@ inherited fClientes: TfClientes
         ParentFont = False
       end
       inherited DBGridDadosTerc: TDBGrid
-        Top = 60
+        Left = 1
+        Top = 48
         Width = 836
-        Height = 257
+        DataSource = DataSource
         TitleFont.Charset = ANSI_CHARSET
         TitleFont.Name = 'Tahoma'
+        OnDrawColumnCell = DBGridDadosTercDrawColumnCell
+        Columns = <
+          item
+            Expanded = False
+            FieldName = 'CODIGO'
+            Title.Caption = 'C'#243'digo'
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'NOME'
+            Title.Caption = 'Nome'
+            Width = 476
+            Visible = True
+          end
+          item
+            Expanded = False
+            FieldName = 'BAIRRO'
+            Title.Caption = 'Bairro'
+            Width = 235
+            Visible = True
+          end>
       end
       inherited BtnPesquisar: TBitBtn
         Top = 11
@@ -54,6 +76,7 @@ inherited fClientes: TfClientes
         ItemIndex = 0
         TabOrder = 2
         Text = 'Nome'
+        OnChange = ComboBoxPesqPorChange
         Items.Strings = (
           'Nome'
           'C'#243'digo')
@@ -66,6 +89,7 @@ inherited fClientes: TfClientes
         CharCase = ecUpperCase
         TabOrder = 3
         Text = ''
+        OnKeyPress = EditPesqKeyPress
       end
     end
     inherited TabCadastro: TTabSheet
@@ -111,7 +135,7 @@ inherited fClientes: TfClientes
         ParentFont = False
       end
       object Label37: TLabel [3]
-        Left = 102
+        Left = 96
         Top = 55
         Width = 52
         Height = 13
@@ -124,7 +148,7 @@ inherited fClientes: TfClientes
         ParentFont = False
       end
       object Label42: TLabel [4]
-        Left = 237
+        Left = 211
         Top = 55
         Width = 38
         Height = 13
@@ -152,12 +176,14 @@ inherited fClientes: TfClientes
       inherited PanelCadBottom: TPanel
         Top = 336
         Width = 840
-        ExplicitTop = 529
-        ExplicitWidth = 1007
+        TabOrder = 8
+        ExplicitTop = 336
+        ExplicitWidth = 840
         inherited ToolBar: TToolBar
           Left = 226
           Top = 0
           Width = 380
+          Height = 52
           ButtonHeight = 52
           ButtonWidth = 56
           Font.Charset = ANSI_CHARSET
@@ -168,6 +194,7 @@ inherited fClientes: TfClientes
           ExplicitLeft = 226
           ExplicitTop = 0
           ExplicitWidth = 380
+          ExplicitHeight = 52
           inherited BtnNovo: TToolButton
             ImageIndex = 0
             ExplicitWidth = 56
@@ -210,7 +237,7 @@ inherited fClientes: TfClientes
         end
         inherited StatusBar: TStatusBar
           Width = 838
-          ExplicitWidth = 1005
+          ExplicitWidth = 838
         end
       end
       object EditRG: TEdit
@@ -220,17 +247,17 @@ inherited fClientes: TfClientes
         Width = 101
         Height = 21
         MaxLength = 14
-        TabOrder = 1
+        TabOrder = 2
       end
       object MaskEditCPF: TMaskEdit
         Tag = 5
         Left = 1
         Top = 71
-        Width = 74
+        Width = 86
         Height = 21
         EditMask = '999.999.999-99;0;_'
         MaxLength = 14
-        TabOrder = 2
+        TabOrder = 3
         Text = ''
       end
       object Edit1: TEdit
@@ -239,6 +266,7 @@ inherited fClientes: TfClientes
         Top = 23
         Width = 41
         Height = 21
+        TabStop = False
         Color = clInactiveBorder
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -247,9 +275,9 @@ inherited fClientes: TfClientes
         Font.Style = [fsBold]
         ParentFont = False
         ReadOnly = True
-        TabOrder = 3
+        TabOrder = 0
       end
-      object Edit2: TEdit
+      object EditNome: TEdit
         Tag = 5
         Left = 54
         Top = 23
@@ -257,7 +285,7 @@ inherited fClientes: TfClientes
         Height = 21
         CharCase = ecUpperCase
         MaxLength = 40
-        TabOrder = 4
+        TabOrder = 1
       end
       object GroupBox1: TGroupBox
         Left = 3
@@ -271,7 +299,7 @@ inherited fClientes: TfClientes
         Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
-        TabOrder = 5
+        TabOrder = 7
         object Label14: TLabel
           Left = 9
           Top = 20
@@ -326,7 +354,7 @@ inherited fClientes: TfClientes
         end
         object Label25: TLabel
           Left = 8
-          Top = 114
+          Top = 116
           Width = 38
           Height = 13
           Caption = 'Cidade'
@@ -339,7 +367,7 @@ inherited fClientes: TfClientes
         end
         object Label26: TLabel
           Left = 458
-          Top = 117
+          Top = 116
           Width = 14
           Height = 13
           Caption = 'UF'
@@ -505,7 +533,7 @@ inherited fClientes: TfClientes
           MaxLength = 30
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 5
+          TabOrder = 4
           Valor = 'REdit1'
           Field = 'BAIRRO'
         end
@@ -541,7 +569,7 @@ inherited fClientes: TfClientes
           MaxLength = 70
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 6
+          TabOrder = 5
           Valor = 'REdit1'
           Field = 'BAIRRO'
         end
@@ -561,7 +589,7 @@ inherited fClientes: TfClientes
           MaxLength = 2
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 7
+          TabOrder = 6
           Valor = 'REdit1'
           Field = 'BAIRRO'
         end
@@ -649,7 +677,7 @@ inherited fClientes: TfClientes
           ShowHint = True
           TabOrder = 9
         end
-        object EdPonto: TREdit
+        object EditPais: TREdit
           Tag = 5
           Left = 491
           Top = 132
@@ -665,16 +693,16 @@ inherited fClientes: TfClientes
           MaxLength = 100
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 4
+          TabOrder = 7
           Valor = 'REdit1'
           Field = 'COMPLEMENTO'
         end
       end
       object MaskEditTelCel: TRMaskEdit
         Tag = 5
-        Left = 103
+        Left = 97
         Top = 71
-        Width = 119
+        Width = 104
         Height = 21
         Ctl3D = True
         EditMask = '(99) 999999999;0;_'
@@ -688,16 +716,16 @@ inherited fClientes: TfClientes
         ParentFont = False
         ParentShowHint = False
         ShowHint = False
-        TabOrder = 6
+        TabOrder = 4
         Text = ''
         Valor = 'RMaskEdit1'
         Field = 'TELEFONE_CEL'
       end
       object EditEmail: TRMaskEdit
         Tag = 5
-        Left = 237
+        Left = 211
         Top = 71
-        Width = 268
+        Width = 294
         Height = 21
         Ctl3D = True
         Font.Charset = DEFAULT_CHARSET
@@ -710,7 +738,7 @@ inherited fClientes: TfClientes
         ParentFont = False
         ParentShowHint = False
         ShowHint = False
-        TabOrder = 7
+        TabOrder = 5
         Text = ''
         Valor = 'RMaskEdit1'
         Field = 'TELEFONE_FAX'
@@ -719,7 +747,7 @@ inherited fClientes: TfClientes
         Left = 511
         Top = 68
         Width = 31
-        Height = 21
+        Height = 24
         Hint = 'Clique aqui para enviar e-mail'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -738,7 +766,7 @@ inherited fClientes: TfClientes
         ParentFont = False
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 8
+        TabOrder = 9
       end
       object CkPesq: TCheckBox
         Left = 564
@@ -752,7 +780,7 @@ inherited fClientes: TfClientes
         Font.Name = 'Tahoma'
         Font.Style = []
         ParentFont = False
-        TabOrder = 9
+        TabOrder = 6
         Visible = False
       end
     end
@@ -762,11 +790,9 @@ inherited fClientes: TfClientes
       object GrEmail: TGroupBox
         Left = 0
         Top = 3
-        Width = 585
+        Width = 837
         Height = 358
-        Caption = 
-          ' Cadastre o email desejado para realizar envios de emails pelo P' +
-          'ro- Commerce '
+        Caption = ' Cadastre o email desejado para realizar envios de emails '
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -841,7 +867,7 @@ inherited fClientes: TfClientes
           Font.Style = [fsBold]
           ParentFont = False
         end
-        object EditNome: TEdit
+        object EditSMTP: TEdit
           Tag = 5
           Left = 11
           Top = 78
@@ -944,14 +970,14 @@ inherited fClientes: TfClientes
     end
   end
   inherited Pop: TPopupMenu
-    Left = 436
-    Top = 280
+    Left = 463
+    Top = 186
   end
   inherited ImageList1: TImageList
     Height = 32
     Width = 32
-    Left = 383
-    Top = 280
+    Left = 410
+    Top = 186
     Bitmap = {
       494C010106000800040020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000004000000001002000000000000080
@@ -2018,289 +2044,138 @@ inherited fClientes: TfClientes
   end
   object DataSource: TDataSource
     DataSet = Query
-    Left = 330
-    Top = 280
+    Left = 304
+    Top = 186
   end
   object Query: TUniQuery
+    Connection = DM.DB
     SQL.Strings = (
-      'select cte.*'
-      
-        ', case when cte.modal_cte = 0 then cast('#39'RODOVI'#193'RIO'#39' as varchar(' +
-        '30))'
-      'when cte.modal_cte = 1 then cast('#39'AQUAVI'#193'RIO'#39' as varchar(30))'
-      'when cte.modal_cte = 2 then cast('#39'A'#201'REO'#39' as varchar(30))'
-      'when cte.modal_cte = 3 then cast('#39'DUTOVI'#193'RIO'#39' as varchar(30))'
-      'when cte.modal_cte = 4 then cast('#39'FERROVI'#193'RIO'#39' as varchar(30))'
-      'when cte.modal_cte = 5 then cast('#39'MULTIMODAL'#39' as varchar(30))'
-      'end as desc_modal'
-      ', case when cte.forma_pagto = 0 then cast('#39'PAGO'#39' as varchar(10))'
-      'when cte.forma_pagto = 1 then cast('#39'A PAGAR'#39' as varchar(10))'
-      'when cte.forma_pagto = 2 then cast('#39'OUTROS'#39' as varchar(10))'
-      'end as desc_pagto'
-      
-        ', case when cte.tipo_servico = 0 then cast('#39'NORMAL'#39' as varchar(5' +
-        '0))'
-      
-        'when cte.tipo_servico = 1 then cast('#39'SUBCONTRATA'#199#195'O'#39' as varchar(' +
-        '50))'
-      'when cte.tipo_servico = 2 then cast('#39'REDESPACHO'#39' as varchar(50))'
-      
-        'when cte.tipo_servico = 3 then cast('#39'REDESPACHO INTERMEDI'#193'RIO'#39' a' +
-        's varchar(50))'
-      
-        'when cte.tipo_servico = 4 then cast('#39'SERVI'#199'O VINCULADO A MULTIMO' +
-        'DAL'#39' as varchar(50))'
-      'end as desc_tipo_servico'
-      ',tc1.cidade as cid_emissao , tc2.cidade as cid_ini_prest'
-      ',tc3.cidade as cid_fim_prest, cf1.nome as desc_tomador'
-      ',cf2.nome as desc_remetente, cf3.nome as desc_expedidor'
-      ',cf4.nome as desc_recebedor, cf5.nome as desc_destinatario'
-      
-        ', case when cte.status_cte = 0 then cast('#39'N'#195'O GERADO'#39' as varchar' +
-        '(50))'
-      'when cte.status_cte = 1 then cast('#39'GERADO'#39' as varchar(50))'
-      'when cte.status_cte = 2 then cast('#39'VALIDADO'#39' as varchar(50))'
-      
-        'when cte.status_cte = 3 then cast('#39'ENVIADO SUCESSO'#39' as varchar(5' +
-        '0))'
-      
-        'when cte.status_cte = 4 then cast('#39'RECEBIDO SUCESSO'#39' as varchar(' +
-        '50))'
-      'when cte.status_cte = 5 then cast('#39'CANCELADO'#39' as varchar(50))'
-      
-        'when cte.status_cte = 6 then cast('#39'INUTILIZADO NUMERA'#199#195'O'#39' as var' +
-        'char(50))'
-      
-        'when cte.status_cte = 7 then cast('#39'DENEGADO'#39' as varchar(50)) end' +
-        ' as desc_status'
-      
-        ', case when (cte.status_cte = 0) or (cte.status_cte = 1) or (cte' +
-        '.status_cte = 2)'
-      'or (cte.status_cte = 3) then cast('#39'A TRANSMITIR'#39' as varchar(20))'
-      
-        'when (cte.status_cte = 4) then cast('#39'TRANSMITIDO'#39' as varchar(20)' +
-        ')'
-      'when cte.status_cte = 5 then cast('#39'CANCELADO'#39' as varchar(20))'
-      'when cte.status_cte = 6 then cast('#39'INUTILIZADO'#39' as varchar(20))'
-      
-        'when cte.status_cte = 7 then cast('#39'DENEGADO'#39' as varchar(20)) end' +
-        ' as desc_status_cli'
-      'from cte'
-      
-        'left outer join teocomp_cidade tc1 on tc1.id_cidade = cte.id_cid' +
-        '_emissao'
-      
-        'left outer join teocomp_cidade tc2 on tc2.id_cidade = cte.id_cid' +
-        '_ini_prest'
-      
-        'left outer join teocomp_cidade tc3 on tc3.id_cidade = cte.id_cid' +
-        '_fim_prest'
-      'left outer join cli_forn cf1 on cf1.codigo = cte.cod_tomador'
-      'left outer join cli_forn cf2 on cf2.codigo = cte.cod_remetente'
-      'left outer join cli_forn cf3 on cf3.codigo = cte.cod_expedidor'
-      'left outer join cli_forn cf4 on cf4.codigo = cte.cod_recebedor'
-      
-        'left outer join cli_forn cf5 on cf5.codigo = cte.cod_destinatari' +
-        'o'
+      'select c.* from clientes c'
       'where 1 = 1')
-    Left = 489
-    Top = 280
+    Left = 516
+    Top = 186
     object QueryCODIGO: TIntegerField
       FieldName = 'CODIGO'
+      Required = True
     end
-    object QueryEMPRESA: TIntegerField
-      FieldName = 'EMPRESA'
-    end
-    object QueryMODELO: TIntegerField
-      FieldName = 'MODELO'
-    end
-    object QuerySUBSERIE: TIntegerField
-      FieldName = 'SUBSERIE'
-    end
-    object QueryDATA_EMISSAO: TDateField
-      FieldName = 'DATA_EMISSAO'
-    end
-    object QueryHORA_EMISSAO: TTimeField
-      FieldName = 'HORA_EMISSAO'
-    end
-    object QueryCOD_NAT_OP: TIntegerField
-      FieldName = 'COD_NAT_OP'
-    end
-    object QueryMODAL_CTE: TIntegerField
-      FieldName = 'MODAL_CTE'
-    end
-    object QueryTIPO_SERVICO: TIntegerField
-      FieldName = 'TIPO_SERVICO'
-    end
-    object QueryFINALIDADE: TIntegerField
-      FieldName = 'FINALIDADE'
-    end
-    object QueryFORMA_EMISSAO: TIntegerField
-      FieldName = 'FORMA_EMISSAO'
-    end
-    object QueryFORMA_PAGTO: TIntegerField
-      FieldName = 'FORMA_PAGTO'
-    end
-    object QueryID_CID_EMISSAO: TIntegerField
-      FieldName = 'ID_CID_EMISSAO'
-    end
-    object QueryID_CID_INI_PREST: TIntegerField
-      FieldName = 'ID_CID_INI_PREST'
-    end
-    object QueryID_CID_FIM_PREST: TIntegerField
-      FieldName = 'ID_CID_FIM_PREST'
-    end
-    object QuerySITUACAO: TIntegerField
-      FieldName = 'SITUACAO'
-    end
-    object QueryRECEB_CTE: TIntegerField
-      FieldName = 'RECEB_CTE'
-    end
-    object QueryIDENT_TOMADOR: TIntegerField
-      FieldName = 'IDENT_TOMADOR'
-    end
-    object QueryCOD_TOMADOR: TIntegerField
-      FieldName = 'COD_TOMADOR'
-    end
-    object QueryIDENT_REMETENTE: TIntegerField
-      FieldName = 'IDENT_REMETENTE'
-    end
-    object QueryCOD_REMETENTE: TIntegerField
-      FieldName = 'COD_REMETENTE'
-    end
-    object QueryIDENT_EXPEDIDOR: TIntegerField
-      FieldName = 'IDENT_EXPEDIDOR'
-    end
-    object QueryCOD_EXPEDIDOR: TIntegerField
-      FieldName = 'COD_EXPEDIDOR'
-    end
-    object QueryIDENT_RECEBEDOR: TIntegerField
-      FieldName = 'IDENT_RECEBEDOR'
-    end
-    object QueryCOD_RECEBEDOR: TIntegerField
-      FieldName = 'COD_RECEBEDOR'
-    end
-    object QueryIDENT_DESTINATARIO: TIntegerField
-      FieldName = 'IDENT_DESTINATARIO'
-    end
-    object QueryCOD_DESTINATARIO: TIntegerField
-      FieldName = 'COD_DESTINATARIO'
-    end
-    object QueryRETIRADA: TIntegerField
-      FieldName = 'RETIRADA'
-    end
-    object QueryCID_EMISSAO: TStringField
-      FieldName = 'CID_EMISSAO'
+    object QueryNOME: TStringField
+      FieldName = 'NOME'
       Size = 100
     end
-    object QueryCID_INI_PREST: TStringField
-      FieldName = 'CID_INI_PREST'
+    object QueryRG: TStringField
+      FieldName = 'RG'
+      Size = 15
+    end
+    object QueryCPF: TStringField
+      FieldName = 'CPF'
+      Size = 15
+    end
+    object QueryTELEFONE: TStringField
+      FieldName = 'TELEFONE'
+      Size = 15
+    end
+    object QueryEMAIL: TStringField
+      FieldName = 'EMAIL'
+      Size = 50
+    end
+    object QueryLOGRADOURO: TStringField
+      FieldName = 'LOGRADOURO'
       Size = 100
     end
-    object QueryCID_FIM_PREST: TStringField
-      FieldName = 'CID_FIM_PREST'
-      Size = 100
+    object QueryNUMERO: TStringField
+      FieldName = 'NUMERO'
+      Size = 15
     end
-    object QueryDESC_TOMADOR: TStringField
-      FieldName = 'DESC_TOMADOR'
-      Size = 100
-    end
-    object QueryDESC_REMETENTE: TStringField
-      FieldName = 'DESC_REMETENTE'
-      Size = 100
-    end
-    object QueryDESC_EXPEDIDOR: TStringField
-      FieldName = 'DESC_EXPEDIDOR'
-      Size = 100
-    end
-    object QueryDESC_RECEBEDOR: TStringField
-      FieldName = 'DESC_RECEBEDOR'
-      Size = 100
-    end
-    object QueryDESC_DESTINATARIO: TStringField
-      FieldName = 'DESC_DESTINATARIO'
-      Size = 100
-    end
-    object QueryVALOR_CARGA: TFloatField
-      FieldName = 'VALOR_CARGA'
-    end
-    object QueryPROD_PREDOMINANTE: TStringField
-      FieldName = 'PROD_PREDOMINANTE'
-      Size = 60
-    end
-    object QueryDESC_MODAL: TStringField
-      FieldName = 'DESC_MODAL'
-      ReadOnly = True
-      Size = 30
-    end
-    object QueryDESC_PAGTO: TStringField
-      FieldName = 'DESC_PAGTO'
-      ReadOnly = True
+    object QueryCEP: TStringField
+      FieldName = 'CEP'
       Size = 10
     end
-    object QueryDESC_TIPO_SERVICO: TStringField
-      FieldName = 'DESC_TIPO_SERVICO'
-      ReadOnly = True
+    object QueryCOMPLEMENTO: TStringField
+      FieldName = 'COMPLEMENTO'
       Size = 50
     end
-    object QueryRNTRC: TStringField
-      FieldName = 'RNTRC'
-      Size = 8
-    end
-    object QueryDATA_ENTREGA: TDateField
-      FieldName = 'DATA_ENTREGA'
-    end
-    object QueryIND_LOT: TIntegerField
-      FieldName = 'IND_LOT'
-    end
-    object QueryCIOT: TStringField
-      FieldName = 'CIOT'
-      Size = 12
-    end
-    object QueryTAF: TStringField
-      FieldName = 'TAF'
-      Size = 12
-    end
-    object QueryN_REG_EST: TStringField
-      FieldName = 'N_REG_EST'
-      Size = 25
-    end
-    object QueryOBS: TStringField
-      FieldName = 'OBS'
-      Size = 500
-    end
-    object QuerySTATUS_CTE: TIntegerField
-      FieldName = 'STATUS_CTE'
-    end
-    object QueryCONTINGENCIA: TIntegerField
-      FieldName = 'CONTINGENCIA'
-    end
-    object QueryCTE_CHAVE: TStringField
-      FieldName = 'CTE_CHAVE'
+    object QueryBAIRRO: TStringField
+      FieldName = 'BAIRRO'
       Size = 50
     end
-    object QueryCTE_ALEATORIO: TStringField
-      FieldName = 'CTE_ALEATORIO'
+    object QueryCIDADE: TStringField
+      FieldName = 'CIDADE'
+      Size = 100
     end
-    object QueryCTE_RECIBO: TStringField
-      FieldName = 'CTE_RECIBO'
-      Size = 30
+    object QueryUF: TStringField
+      FieldName = 'UF'
+      Size = 2
     end
-    object QueryCTE_PROTOCOLO: TStringField
-      FieldName = 'CTE_PROTOCOLO'
-      Size = 30
-    end
-    object QueryDESC_STATUS: TStringField
-      FieldName = 'DESC_STATUS'
-      ReadOnly = True
+    object QueryPAIS: TStringField
+      FieldName = 'PAIS'
       Size = 50
     end
-    object QueryFIM_CONTINGENCIA: TIntegerField
-      FieldName = 'FIM_CONTINGENCIA'
+  end
+  object QueryMem: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 357
+    Top = 186
+    object QueryMemCODIGO: TIntegerField
+      FieldName = 'CODIGO'
+      Required = True
     end
-    object QueryDESC_STATUS_CLI: TStringField
-      FieldName = 'DESC_STATUS_CLI'
-      ReadOnly = True
+    object QueryMemNOME: TStringField
+      FieldName = 'NOME'
+      Size = 100
+    end
+    object QueryMemRG: TStringField
+      FieldName = 'RG'
+      Size = 15
+    end
+    object QueryMemCPF: TStringField
+      FieldName = 'CPF'
+      Size = 15
+    end
+    object QueryMemTELEFONE: TStringField
+      FieldName = 'TELEFONE'
+      Size = 15
+    end
+    object QueryMemEMAIL: TStringField
+      FieldName = 'EMAIL'
+      Size = 50
+    end
+    object QueryMemLOGRADOURO: TStringField
+      FieldName = 'LOGRADOURO'
+      Size = 100
+    end
+    object QueryMemNUMERO: TStringField
+      FieldName = 'NUMERO'
+      Size = 15
+    end
+    object QueryMemCEP: TStringField
+      FieldName = 'CEP'
+      Size = 10
+    end
+    object QueryMemCOMPLEMENTO: TStringField
+      FieldName = 'COMPLEMENTO'
+      Size = 50
+    end
+    object QueryMemBAIRRO: TStringField
+      FieldName = 'BAIRRO'
+      Size = 50
+    end
+    object QueryMemCIDADE: TStringField
+      FieldName = 'CIDADE'
+      Size = 100
+    end
+    object QueryMemUF: TStringField
+      FieldName = 'UF'
+      Size = 2
+    end
+    object QueryMemPAIS: TStringField
+      FieldName = 'PAIS'
+      Size = 50
     end
   end
 end

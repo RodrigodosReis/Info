@@ -34,6 +34,7 @@ type
     Cancelar2: TMenuItem;
     Fechar2: TMenuItem;
     ImageList1: TImageList;
+    BtnVoltar: TToolButton;
     function VerifyReqFields: Boolean; virtual;
     function CreateSelect: string; virtual;
     function CreateInsert: string; virtual; abstract;
@@ -511,12 +512,12 @@ end;
 
 procedure TfrmModeloCad.SetPermissionArray;
 begin
-//  FPermission[1] := DM.HavePermission(FCodModulo, 1);
-//  FPermission[2] := DM.HavePermission(FCodModulo, 2);
-//  FPermission[3] := DM.HavePermission(FCodModulo, 3);
-//  FPermission[4] := DM.HavePermission(FCodModulo, 4);
-//  FPermission[5] := DM.HavePermission(FCodModulo, 5);
-//  FPermission[6] := DM.HavePermission(FCodModulo, 6);
+  FPermission[1] := DM.HavePermission(FCodModulo, 1);
+  FPermission[2] := DM.HavePermission(FCodModulo, 2);
+  FPermission[3] := DM.HavePermission(FCodModulo, 3);
+  FPermission[4] := DM.HavePermission(FCodModulo, 4);
+  FPermission[5] := DM.HavePermission(FCodModulo, 5);
+  FPermission[6] := DM.HavePermission(FCodModulo, 6);
 end;
 
 procedure TfrmModeloCad.BtnCancelarClick(Sender: TObject);

@@ -7,8 +7,18 @@ object DM: TDM
     Top = 185
   end
   object DB: TUniConnection
+    ProviderName = 'InterBase'
+    Database = 'R:\Trabalho\Info\Info\Teste_Delphi\TESTE.FDB'
+    SpecificOptions.Strings = (
+      
+        'InterBase.ClientLibrary=R:\Trabalho\Info\Info\Teste_Delphi\fbcli' +
+        'ent.dll')
+    Username = 'sysdba'
+    Server = 'localhost'
+    LoginPrompt = False
     Left = 282
     Top = 185
+    EncryptedPassword = '92FF9EFF8CFF8BFF9AFF8DFF94FF9AFF86FF'
   end
   object Trans: TUniTransaction
     DefaultConnection = DB

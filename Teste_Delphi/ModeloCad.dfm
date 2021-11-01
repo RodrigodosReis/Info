@@ -27,7 +27,7 @@ object frmModeloCad: TfrmModeloCad
     Top = 0
     Width = 585
     Height = 416
-    ActivePage = TabPesquisa
+    ActivePage = TabCadastro
     Align = alClient
     TabOrder = 0
     OnChanging = PageControlChanging
@@ -139,7 +139,7 @@ object frmModeloCad: TfrmModeloCad
         object ToolBar: TToolBar
           Left = 102
           Top = 1
-          Width = 339
+          Width = 451
           Height = 54
           Align = alCustom
           ButtonHeight = 21
@@ -197,8 +197,14 @@ object frmModeloCad: TfrmModeloCad
             ShowHint = True
             OnClick = BtnCancelarClick
           end
-          object ToolButton1: TToolButton
+          object BtnVoltar: TToolButton
             Left = 245
+            Top = 0
+            Caption = '&Voltar'
+            ImageIndex = 6
+          end
+          object ToolButton1: TToolButton
+            Left = 294
             Top = 0
             Cursor = crHandPoint
             Caption = '&Fechar'

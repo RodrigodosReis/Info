@@ -6,9 +6,9 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ComCtrls, StdCtrls, Buttons, Grids, DBGrids, Mask, ToolWin,
   ImgList, ShellApi, DB,
-  ExtCtrls, DM,
+  ExtCtrls, uDM,
   RxCurrEdit, RxToolEdit,
-  RxLookup, SQLComboUni, Menus, Uni, U_DMUni, System.ImageList;
+  RxLookup, SQLComboUni, Menus, Uni, System.ImageList;
 
 type
   TfrmModeloCad = class(TForm)
@@ -96,7 +96,7 @@ type
   public
     { Public declarations }
     FPermission: array[1..6] of Boolean;
-    Operation: TOperacaoCommerce;
+    Operation: TOperacaoProj;
     FCodModulo: Integer;
     FKey: array[1..6] of string;
     FKeyValue: array[1..6] of Variant;
@@ -113,7 +113,6 @@ var
 
 implementation
 
-uses UnitPrincipal, UnitReportData;
 
 {$R *.dfm}
 
@@ -163,10 +162,7 @@ end;
 procedure TfrmModeloCad.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-  if FQuery is TIBQuery then
-    TIBQuery(FQuery).Close
-  else
-    TUniQuery(FQuery).Close;
+  TUniQuery(FQuery).Close;
 end;
 
 procedure TfrmModeloCad.SetDefValues;
@@ -177,28 +173,11 @@ begin
     PageControl.TabIndex := 0;
   except
   end;
-{
-  A := FindComponent('EditPesq');
-  if A <> nil then
-    if ((A as TWinControl).Visible) and ((A as TWinControl).Enabled) then
-    begin
-{      try
-        (A as TWinControl).SetFocus;
-      except;
-      end;
-}
-//      if (A as TWinControl).CanFocus then
-//        (A as TWinControl).SetFocus;
-//    end;
 end;
 
 procedure TfrmModeloCad.CompleteCampos;
 begin
   StatusBar.SimpleText := '';
-
-  {  FKeyValue[1]:= FQuery.FieldByName(FKey[1]).AsString; }
-  {  FKeyValue[2]:= FQuery.FieldByName(FKey[2]).AsString; }
-  {  FKeyValue[n]:= FQuery.FieldByName(FKey[n]).AsString; }
 end;
 
 procedure TfrmModeloCad.Limpar;
@@ -223,8 +202,8 @@ begin
       (Components[i] as TRxDBLookupCombo).KeyValue := 0
     else if Components[i] is TComboEdit then
       (Components[i] as TComboEdit).Text := ''
-    else if Components[i] is TSQLCombo then
-      (Components[i] as TSQLCombo).KeyValue := -1;
+    else if Components[i] is TSQLComboUni then
+      (Components[i] as TSQLComboUni).KeyValue := -1;
   end;
 end;
 
@@ -237,12 +216,6 @@ begin
   EnableCadastro(True);
   Limpar;
 
-  {for i:=0 to ComponentCount-1 do
-    begin
-      if Components[i] is TEdit
-        then (Components[i] as TEdit).ReadOnly := False;
-  end;}
-
   BtnSalvar.Enabled := True;
   BtnCancelar.Enabled := True;
   BtnNovo.Enabled := False;
@@ -252,39 +225,28 @@ begin
   if PrintBtn <> nil then
     PrintBtn.Enabled := False;
 
-  //if FNovoFocusControl <> nil then
-    //FNovoFocusControl.SetFocus;
-
 end;
 
 procedure TfrmModeloCad.Incluir;
 begin
   if not CheckFields then
-    Exit; // Nova função
+    Exit;
 
-  if VerifyReqFields then // Tem alguns Forms que ainda utiliza a Função
+  if VerifyReqFields then
   begin
     if CheckOthers then
     begin
 
       BeforeOperation;
 
-      DMUni.ExecutaSQL(CreateInsert);
-      DMUni.BuscaSimples(FAutoNumSQL);
-      FKeyValue[1] := DMUni.QryAux.Fields[0].AsInteger;
+      DM.ExecutaSQL(CreateInsert);
+      DM.BuscaSimples(FAutoNumSQL);
+      FKeyValue[1] := DM.QryAux.Fields[0].AsInteger;
 
       SetCodField;
       SaveOthers;
-      if FQuery is TIBQuery then
-      begin
-        if TIBQuery(FQuery).Active then
-          DM.RefreshQuery(TIBQuery(FQuery), FKey, FKeyValue);
-      end
-      else
-      begin
-        if TUniQuery(FQuery).Active then
-          TUniQuery(FQuery).Refresh;
-      end;
+      if TUniQuery(FQuery).Active then
+        TUniQuery(FQuery).Refresh;
       AfterInsert;
       AfterOperation;
 
@@ -308,12 +270,7 @@ begin
 
     end
     else if FCheckOthersMessage <> '' then
-    {$IFDEF VER150}
-      Application.MessageBox(PAnsiChar(FCheckOthersMessage), 'Atenção', 48);
-    {$ELSE}
-      Application.MessageBox(PWideChar(FCheckOthersMessage), 'Atenção', 48);
-    {$ENDIF}
-
+    Application.MessageBox(PWideChar(FCheckOthersMessage), 'Atenção', 48);
   end
   else
     Application.MessageBox('Preencha os campos!', 'Atenção', 48);
@@ -325,9 +282,9 @@ var
   SQL: string;
 begin
   if not CheckFields then
-    Exit; // Nova função
+    Exit;
 
-  if VerifyReqFields then // Tem alguns Forms que ainda utiliza a Função
+  if VerifyReqFields then
   begin
     if CheckOthers then
     begin
@@ -337,23 +294,12 @@ begin
       SQL := CreateUpdate;
       if SQL <> '' then
       begin
-        if FQuery is TIBQuery then
-          ExecuteSQL(SQL)
-        else
-          DMUni.ExecutaSQL(SQL);
+        DM.ExecutaSQL(SQL);
       end;
 
       SaveOthers;
-      if FQuery is TIBQuery then
-      begin
-        if TIBQuery(FQuery).Active then
-          DM.RefreshQuery(TIBQuery(FQuery), FKey, FKeyValue);
-      end
-      else
-      begin
-        if TUniQuery(FQuery).Active then
-          TUniQuery(FQuery).Refresh;
-      end;
+      if TUniQuery(FQuery).Active then
+        TUniQuery(FQuery).Refresh;
 
       AfterOperation;
       Operation := opDataOut;
@@ -372,12 +318,7 @@ begin
 
     end
     else if FCheckOthersMessage <> '' then
-    {$IFDEF VER150}
-      Application.MessageBox(PAnsiChar(FCheckOthersMessage), 'Atenção', 48);
-    {$ELSE}
-      Application.MessageBox(PWideChar(FCheckOthersMessage), 'Atenção', 48);
-    {$ENDIF}
-
+    Application.MessageBox(PWideChar(FCheckOthersMessage), 'Atenção', 48);
   end
   else
     Application.MessageBox('Preencha os campos!', 'Atenção', 48);
@@ -431,20 +372,14 @@ end;
 procedure TfrmModeloCad.GetData;
 var Qtd: Integer;
 begin
-  if FQuery is TIBQuery then
-    Qtd := TIBQuery(FQuery).RecordCount
+  if FQuery is TUniQuery then
+    begin
+    Qtd := TUniQuery(FQuery).RecordCount;
+    end
   else
     begin
-      if FQuery is TUniQuery then
-        begin
-        Qtd := TUniQuery(FQuery).RecordCount;
-        end
-      else
-        begin
-        Qtd := 0;
-        end;
+    Qtd := 0;
     end;
-
 
   if Qtd > 0 then
   begin
@@ -487,15 +422,13 @@ procedure TfrmModeloCad.Excluir;
 var
   SQL: string;
 begin
-//  if Application.MessageBox('Confirma exclusão ?','Confirmação',32 + MB_YesNo) = idYes then
-//  begin
   SQL := CreateDelete;
 
   try
     BeforeOperation;
 
     if SQL <> '' then
-      ExecuteSQL(SQL);
+      DM.ExecutaSQL(SQL);
     DeleteOthers;
   except
     on E: Exception do
@@ -541,18 +474,15 @@ procedure TfrmModeloCad.Pesquisar;
 begin
   if FPermission[1] then
   begin
-    if FQuery is TIBQuery then
-      DM.SQLQuery(TIBQuery(FQuery), CreateSelect)
-    else
+
+    with TUniQuery(FQuery) do
     begin
-      with TUniQuery(FQuery) do
-      begin
-        Close;
-        Sql.Clear;
-        Sql.Add(CreateSelect);
-        Open;
-      end;
+      Close;
+      Sql.Clear;
+      Sql.Add(CreateSelect);
+      Open;
     end;
+
   end;
 end;
 
@@ -689,9 +619,9 @@ begin
         if Trim((Components[i] as TComboEdit).Text) = '' then
           Break;
       end
-      else if Components[i] is TSQLCombo then
+      else if Components[i] is TSQLComboUni then
       begin
-        if Trim((Components[i] as TSQLCombo).Text) = '' then
+        if Trim((Components[i] as TSQLComboUni).Text) = '' then
           Break;
       end;
     end;
