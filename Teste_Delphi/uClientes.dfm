@@ -33,9 +33,9 @@ inherited fClientes: TfClientes
         ParentFont = False
       end
       inherited DBGridDadosTerc: TDBGrid
-        Top = 60
+        Left = 1
+        Top = 48
         Width = 836
-        Height = 257
         TitleFont.Charset = ANSI_CHARSET
         TitleFont.Name = 'Tahoma'
       end
@@ -111,7 +111,7 @@ inherited fClientes: TfClientes
         ParentFont = False
       end
       object Label37: TLabel [3]
-        Left = 102
+        Left = 81
         Top = 55
         Width = 52
         Height = 13
@@ -124,7 +124,7 @@ inherited fClientes: TfClientes
         ParentFont = False
       end
       object Label42: TLabel [4]
-        Left = 237
+        Left = 211
         Top = 55
         Width = 38
         Height = 13
@@ -672,7 +672,7 @@ inherited fClientes: TfClientes
       end
       object MaskEditTelCel: TRMaskEdit
         Tag = 5
-        Left = 103
+        Left = 82
         Top = 71
         Width = 119
         Height = 21
@@ -695,9 +695,9 @@ inherited fClientes: TfClientes
       end
       object EditEmail: TRMaskEdit
         Tag = 5
-        Left = 237
+        Left = 211
         Top = 71
-        Width = 268
+        Width = 294
         Height = 21
         Ctl3D = True
         Font.Charset = DEFAULT_CHARSET
@@ -762,11 +762,9 @@ inherited fClientes: TfClientes
       object GrEmail: TGroupBox
         Left = 0
         Top = 3
-        Width = 585
+        Width = 837
         Height = 358
-        Caption = 
-          ' Cadastre o email desejado para realizar envios de emails pelo P' +
-          'ro- Commerce '
+        Caption = ' Cadastre o email desejado para realizar envios de emails '
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
