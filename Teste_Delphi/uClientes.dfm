@@ -1,41 +1,53 @@
 inherited fClientes: TfClientes
   Caption = 'Cadastro de Clientes'
-  ClientHeight = 589
-  ClientWidth = 847
+  ClientHeight = 439
+  ClientWidth = 848
   Position = poDesktopCenter
-  ExplicitWidth = 853
-  ExplicitHeight = 618
+  ExplicitWidth = 854
+  ExplicitHeight = 468
   PixelsPerInch = 96
   TextHeight = 13
   inherited PageControl: TPageControl
-    Width = 847
-    Height = 589
+    Width = 848
+    Height = 439
     ActivePage = TabCadastro
-    ExplicitWidth = 847
-    ExplicitHeight = 589
+    Font.Charset = ANSI_CHARSET
+    Font.Name = 'Tahoma'
+    ParentFont = False
+    ExplicitWidth = 848
+    ExplicitHeight = 439
     inherited TabPesquisa: TTabSheet
-      ExplicitWidth = 839
-      ExplicitHeight = 561
+      ExplicitWidth = 840
+      ExplicitHeight = 411
       object Label8: TLabel [0]
         Left = 1
-        Top = -1
-        Width = 82
+        Top = 5
+        Width = 80
         Height = 13
         Caption = 'Pesquisar por:'
-        Font.Charset = DEFAULT_CHARSET
+        Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
-        Font.Name = 'MS Sans Serif'
+        Font.Name = 'Tahoma'
         Font.Style = [fsBold]
         ParentFont = False
       end
       inherited DBGridDadosTerc: TDBGrid
+        Top = 60
         Width = 836
-        Height = 518
+        Height = 257
+        TitleFont.Charset = ANSI_CHARSET
+        TitleFont.Name = 'Tahoma'
+      end
+      inherited BtnPesquisar: TBitBtn
+        Top = 11
+        Width = 128
+        ExplicitTop = 11
+        ExplicitWidth = 128
       end
       object ComboBoxPesqPor: TComboBox
         Left = 1
-        Top = 14
+        Top = 21
         Width = 82
         Height = 21
         Style = csDropDownList
@@ -48,7 +60,7 @@ inherited fClientes: TfClientes
       end
       object EditPesq: TMaskEdit
         Left = 85
-        Top = 14
+        Top = 21
         Width = 396
         Height = 21
         CharCase = ecUpperCase
@@ -57,48 +69,691 @@ inherited fClientes: TfClientes
       end
     end
     inherited TabCadastro: TTabSheet
-      ExplicitWidth = 839
-      ExplicitHeight = 561
+      ExplicitWidth = 840
+      ExplicitHeight = 411
+      object Label1: TLabel [0]
+        Left = 1
+        Top = 7
+        Width = 38
+        Height = 13
+        Caption = 'C'#243'digo'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label10: TLabel [1]
+        Left = 54
+        Top = 7
+        Width = 32
+        Height = 13
+        Caption = 'Nome'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object LabelDoc2: TLabel [2]
+        Left = 564
+        Top = 7
+        Width = 62
+        Height = 13
+        Caption = 'Identidade'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label37: TLabel [3]
+        Left = 102
+        Top = 55
+        Width = 52
+        Height = 13
+        Caption = 'Telefone '
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label42: TLabel [4]
+        Left = 237
+        Top = 55
+        Width = 38
+        Height = 13
+        Caption = 'E-mail '
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
+      object Label2: TLabel [5]
+        Left = 1
+        Top = 55
+        Width = 20
+        Height = 13
+        Caption = 'CPF'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+      end
       inherited PanelCadBottom: TPanel
-        Top = 486
-        Width = 839
-        ExplicitTop = 486
-        ExplicitWidth = 839
+        Top = 336
+        Width = 840
+        ExplicitTop = 529
+        ExplicitWidth = 1007
         inherited ToolBar: TToolBar
-          Left = 262
-          Width = 331
+          Left = 226
+          Top = 0
+          Width = 380
           ButtonHeight = 52
+          ButtonWidth = 56
+          Font.Charset = ANSI_CHARSET
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
           Images = ImageList1
-          ExplicitLeft = 262
-          ExplicitWidth = 331
+          ParentFont = False
+          ExplicitLeft = 226
+          ExplicitTop = 0
+          ExplicitWidth = 380
           inherited BtnNovo: TToolButton
             ImageIndex = 0
+            ExplicitWidth = 56
             ExplicitHeight = 52
           end
           inherited BtnSalvar: TToolButton
+            Left = 56
             ImageIndex = 1
+            ExplicitLeft = 56
+            ExplicitWidth = 56
             ExplicitHeight = 52
           end
           inherited BtnAlterar: TToolButton
+            Left = 112
             ImageIndex = 2
+            ExplicitLeft = 112
+            ExplicitWidth = 56
             ExplicitHeight = 52
           end
           inherited BtnExcluir: TToolButton
+            Left = 168
+            ExplicitLeft = 168
+            ExplicitWidth = 56
             ExplicitHeight = 52
           end
           inherited BtnCancelar: TToolButton
+            Left = 224
             ImageIndex = 5
+            ExplicitLeft = 224
+            ExplicitWidth = 56
             ExplicitHeight = 52
           end
           inherited ToolButton1: TToolButton
+            Left = 280
             ImageIndex = 4
+            ExplicitLeft = 280
+            ExplicitWidth = 56
             ExplicitHeight = 52
           end
         end
         inherited StatusBar: TStatusBar
-          Width = 837
-          ExplicitWidth = 837
+          Width = 838
+          ExplicitWidth = 1005
         end
+      end
+      object EditRG: TEdit
+        Tag = 5
+        Left = 564
+        Top = 23
+        Width = 101
+        Height = 21
+        MaxLength = 14
+        TabOrder = 1
+      end
+      object MaskEditCPF: TMaskEdit
+        Tag = 5
+        Left = 1
+        Top = 71
+        Width = 74
+        Height = 21
+        EditMask = '999.999.999-99;0;_'
+        MaxLength = 14
+        TabOrder = 2
+        Text = ''
+      end
+      object Edit1: TEdit
+        Tag = 5
+        Left = 1
+        Top = 23
+        Width = 41
+        Height = 21
+        Color = clInactiveBorder
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 3
+      end
+      object Edit2: TEdit
+        Tag = 5
+        Left = 54
+        Top = 23
+        Width = 488
+        Height = 21
+        CharCase = ecUpperCase
+        MaxLength = 40
+        TabOrder = 4
+      end
+      object GroupBox1: TGroupBox
+        Left = 3
+        Top = 106
+        Width = 835
+        Height = 224
+        Caption = 'Endere'#231'o'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clNavy
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 5
+        object Label14: TLabel
+          Left = 9
+          Top = 20
+          Width = 20
+          Height = 13
+          Caption = 'CEP'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label22: TLabel
+          Left = 768
+          Top = 20
+          Width = 44
+          Height = 13
+          Caption = 'N'#250'mero'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label23: TLabel
+          Left = 8
+          Top = 67
+          Width = 79
+          Height = 13
+          Caption = 'Complemento'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label24: TLabel
+          Left = 456
+          Top = 67
+          Width = 34
+          Height = 13
+          Caption = 'Bairro'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label25: TLabel
+          Left = 8
+          Top = 116
+          Width = 38
+          Height = 13
+          Caption = 'Cidade'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label26: TLabel
+          Left = 458
+          Top = 116
+          Width = 14
+          Height = 13
+          Caption = 'UF'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label64: TLabel
+          Left = 671
+          Top = 181
+          Width = 50
+          Height = 13
+          Caption = 'C'#243'd IBGE'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label65: TLabel
+          Left = 757
+          Top = 176
+          Width = 54
+          Height = 13
+          Caption = 'Consultar'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label86: TLabel
+          Left = 490
+          Top = 116
+          Width = 23
+          Height = 13
+          Caption = 'Pa'#237's'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object Label3: TLabel
+          Left = 101
+          Top = 19
+          Width = 65
+          Height = 13
+          Caption = 'Logradouro'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object MaskEditCEP: TRMaskEdit
+          Tag = 5
+          Left = 8
+          Top = 35
+          Width = 66
+          Height = 21
+          Hint = 
+            'Digite o CEP e tecle Tab para trazer automaticamente o endere'#231'o ' +
+            'ou Pesquise-o teclando F10'
+          CharCase = ecUpperCase
+          Ctl3D = True
+          EditMask = '99999-999;0;_'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          MaxLength = 9
+          ParentCtl3D = False
+          ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 0
+          Text = ''
+          Valor = 'RMaskEdit1'
+          Field = 'CEP'
+        end
+        object EditEndereco: TREdit
+          Tag = 5
+          Left = 100
+          Top = 35
+          Width = 661
+          Height = 21
+          CharCase = ecUpperCase
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          MaxLength = 50
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 1
+          Valor = 'REdit1'
+          Field = 'ENDERECO'
+        end
+        object EditNumero: TREdit
+          Tag = 5
+          Left = 767
+          Top = 35
+          Width = 64
+          Height = 21
+          CharCase = ecUpperCase
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          MaxLength = 10
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 2
+          Valor = 'REdit1'
+          Field = 'NUMERO'
+        end
+        object EditComplemento: TREdit
+          Tag = 5
+          Left = 9
+          Top = 83
+          Width = 441
+          Height = 21
+          CharCase = ecUpperCase
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          MaxLength = 30
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 3
+          Valor = 'REdit1'
+          Field = 'COMPLEMENTO'
+        end
+        object EditBairro: TREdit
+          Tag = 5
+          Left = 457
+          Top = 83
+          Width = 304
+          Height = 21
+          CharCase = ecUpperCase
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          MaxLength = 30
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 5
+          Valor = 'REdit1'
+          Field = 'BAIRRO'
+        end
+        object BitBtn2: TBitBtn
+          Tag = 5
+          Left = 75
+          Top = 35
+          Width = 23
+          Height = 21
+          Caption = '...'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 10
+          TabStop = False
+        end
+        object EditCidade: TREdit
+          Tag = 5
+          Left = 9
+          Top = 131
+          Width = 441
+          Height = 21
+          CharCase = ecUpperCase
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          MaxLength = 70
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 6
+          Valor = 'REdit1'
+          Field = 'BAIRRO'
+        end
+        object EditUF: TREdit
+          Tag = 5
+          Left = 457
+          Top = 131
+          Width = 28
+          Height = 21
+          CharCase = ecUpperCase
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          MaxLength = 2
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 7
+          Valor = 'REdit1'
+          Field = 'BAIRRO'
+        end
+        object EditCodIBGE: TEdit
+          Tag = 5
+          Left = 671
+          Top = 195
+          Width = 65
+          Height = 21
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          MaxLength = 14
+          ParentFont = False
+          TabOrder = 8
+        end
+        object ToolBar11: TToolBar
+          Left = 740
+          Top = 188
+          Width = 28
+          Height = 28
+          Align = alCustom
+          ButtonHeight = 26
+          ButtonWidth = 27
+          TabOrder = 11
+          object ToolButton10: TToolButton
+            Tag = 5
+            Left = 0
+            Top = 0
+            Hint = 'Cadastrar'
+            Enabled = False
+            ImageIndex = 0
+            ParentShowHint = False
+            ShowHint = True
+          end
+        end
+        object BitBtn1: TBitBtn
+          Tag = 5
+          Left = 772
+          Top = 193
+          Width = 35
+          Height = 22
+          Hint = 
+            'Clique aqui para consultar em WebService ou '#13#10'abrir o link dos c' +
+            #243'digos de Munic'#237'pios do IBGE!'#13#10'Ser'#225' realizada uma pesquisa pelo ' +
+            'c'#243'digo e nome de cidade'#13#10'e em caso positivo ser'#225' retornado o n'#250'm' +
+            'ero do c'#243'digo e o campo'#13#10'Cidade e em caso negativo, voc'#234' ser'#225' co' +
+            'nduzido a planilha de'#13#10'c'#243'digos de IBGE do pr'#243'prio IBGE!'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          Glyph.Data = {
+            36030000424D3603000000000000360000002800000010000000100000000100
+            1800000000000003000000000000000000000000000000000000C0C0C0C0C0C0
+            C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0
+            C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0BFBFC5C4C4C6C6C6C4C5C5C3
+            C4C4C1C1C1C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0
+            C2C1C1D0D1D0888E8E777B7A8F8686918887B6B3B2C5C5C6C2C2C2C0C0C0C0C0
+            C0C0C0C0C0C0C0C0C0C0C0C0C0C2C1C1BCBDBD33464EB2CBD7F7FFFFFFFFFFFF
+            FDF8CECBC690948DA4A7A6C4C4C5C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0CDCDCE
+            414743CDE4F0C0E3F96C7272797671837A74998B84CBBDB5BFB8ADB1B0B0C1C2
+            C2C0C0C0C0C0C0C0C0C0C1C2C3B9B6AF615A51BCCBD227485DEDF7F6FFFFFFFF
+            FFFFFFFFFFF3E9DDB5A093786757CBCFD2C3C5C5C0C0C0C0C0C0C4C6C89D8773
+            917464524C49EDFFFFE8FEFBECFEF7E5EBE19B988AB8AA99C0B19EBCA58C938B
+            80A89E98C3C5C5C0C0C0C7CBCD7A5742AF81663E2415FFFFFFF9FAFCFFFFFED7
+            CFC72000006027135B18014C0F004913002A0500CFD3D4C0C0C0C6CBCE7A5038
+            CE9373562B11FFFFFFF5F8F8F4F8F6FFFFFDEED5C4612510772F156925055A22
+            00481706CDD2D5C0C0C0C6C9CC7E604AD099798E5537D5B7A4FFFFFFFEFFFFFF
+            FFFFFCF5E35D2E197132126B2E055C28004A1700CDD2D5C0C0C0C0C3C5BFAD9D
+            906145C8917878402E815A48AB85718359445620087E3B1F792E11722608611C
+            004A1700CCD2D5C0C0C0C0C0C0C7CCD17C5F44A57862C18676B4724EA15936A9
+            5B3995492B813E2165260C50110066220C461500CDD3D5C0C0C0C0C0C0BEBFC0
+            D9D9D77B5F497A4A3B9D6F4AA66B49955437723C21341600807463C4B2A52300
+            003D1503CED3D5C0C0C0C0C0C0C0C0C0BEBFC0C7CCCFBEB3AD9A89778166588F
+            6F60A08E85CDD0CDC7CACDC5C9CCBCB4AC180000CFD2D3C0C0C0C0C0C0C0C0C0
+            C0C0C0C0C0C0C1C2C3C4C6C8C6C9CBC5C9CAC3C6C7C0C0C1C0C0C0C0C0C0C0C2
+            C3F0E8E3BDBEBEC0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0
+            C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0C0BDBEBEC0C0C0C0C0C0}
+          ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 9
+        end
+        object EdPonto: TREdit
+          Tag = 5
+          Left = 491
+          Top = 132
+          Width = 270
+          Height = 21
+          CharCase = ecUpperCase
+          Ctl3D = True
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          MaxLength = 100
+          ParentCtl3D = False
+          ParentFont = False
+          TabOrder = 4
+          Valor = 'REdit1'
+          Field = 'COMPLEMENTO'
+        end
+      end
+      object MaskEditTelCel: TRMaskEdit
+        Tag = 5
+        Left = 103
+        Top = 71
+        Width = 119
+        Height = 21
+        Ctl3D = True
+        EditMask = '(99) 999999999;0;_'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        MaxLength = 14
+        ParentCtl3D = False
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = False
+        TabOrder = 6
+        Text = ''
+        Valor = 'RMaskEdit1'
+        Field = 'TELEFONE_CEL'
+      end
+      object EditEmail: TRMaskEdit
+        Tag = 5
+        Left = 237
+        Top = 71
+        Width = 268
+        Height = 21
+        Ctl3D = True
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        MaxLength = 50
+        ParentCtl3D = False
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = False
+        TabOrder = 7
+        Text = ''
+        Valor = 'RMaskEdit1'
+        Field = 'TELEFONE_FAX'
+      end
+      object BtnEmail: TBitBtn
+        Left = 511
+        Top = 68
+        Width = 31
+        Height = 21
+        Hint = 'Clique aqui para enviar e-mail'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        Glyph.Data = {
+          F6000000424DF60000000000000056000000280000000E0000000A0000000100
+          080000000000A000000000000000000000000800000000000000FFFFFF00BFFB
+          FA0097EBEA000CC5C40000A4A300007E7D00004A490000000000060707070707
+          07070707070707070D0006030404040404040404040404070D00060104020202
+          02020202020404070D0006000204020205050202040204070D00060002020405
+          02020504020204070D0006000202050202020205020204070D00060002050202
+          02020202050204070D0006000502020202020202020504070D00060400000000
+          00000000000003070D0006060606060606060606060606060D00}
+        ParentFont = False
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 8
+      end
+      object CkPesq: TCheckBox
+        Left = 564
+        Top = 70
+        Width = 166
+        Height = 17
+        Caption = 'Desativar Pesquisa de CEP?'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 9
+        Visible = False
       end
     end
     object TabSheet1: TTabSheet
@@ -108,7 +763,7 @@ inherited fClientes: TfClientes
         Left = 0
         Top = 3
         Width = 585
-        Height = 372
+        Height = 358
         Caption = 
           ' Cadastre o email desejado para realizar envios de emails pelo P' +
           'ro- Commerce '
@@ -243,7 +898,7 @@ inherited fClientes: TfClientes
           Left = 9
           Top = 202
           Width = 571
-          Height = 164
+          Height = 151
           TabOrder = 6
         end
         object EditCodigo: TEdit
@@ -298,7 +953,7 @@ inherited fClientes: TfClientes
     Left = 383
     Top = 280
     Bitmap = {
-      494C010106000800040020002000FFFFFFFFFF00FFFFFFFFFFFFFFFF424D3600
+      494C010106000800040020002000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000800000004000000001002000000000000080
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1358,7 +2013,8 @@ inherited fClientes: TfClientes
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF00000000000000000000000000000000
+      000000000000}
   end
   object DataSource: TDataSource
     DataSet = Query

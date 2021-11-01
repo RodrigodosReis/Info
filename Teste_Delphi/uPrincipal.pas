@@ -15,6 +15,7 @@ type
     JvXPButton2: TJvXPButton;
     JvXPButton3: TJvXPButton;
     procedure JvXPButton1Click(Sender: TObject);
+    procedure BtnPrincClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -28,7 +29,17 @@ implementation
 
 {$R *.dfm}
 
-uses uDetalhes;
+uses uDetalhes, uClientes;
+
+procedure TfPrincipal.BtnPrincClick(Sender: TObject);
+begin
+  Application.CreateForm(TfClientes, fClientes);
+  try
+    fClientes.ShowModal;
+  finally
+    FreeAndNil(fClientes);
+  end;
+end;
 
 procedure TfPrincipal.JvXPButton1Click(Sender: TObject);
 begin

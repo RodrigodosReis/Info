@@ -7,7 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, ModeloCad, Data.DB, System.ImageList,
   Vcl.ImgList, Vcl.Menus, Vcl.ComCtrls, Vcl.ToolWin, Vcl.ExtCtrls, Vcl.StdCtrls,
   Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, Vcl.Mask, MemDS, DBAccess, Uni,
-  Vcl.DBCtrls, SQLCombo;
+  Vcl.DBCtrls, SQLComboUni, RComboBox, RxCurrEdit, REdit, RMaskEdit, RxToolEdit,
+  SQLCombo;
 
 type
   TfClientes = class(TfrmModeloCad)
@@ -93,7 +94,46 @@ type
     EditCodigo: TEdit;
     cbEmailTLS: TCheckBox;
     cbEmailHTML: TCheckBox;
+    Label1: TLabel;
+    Label10: TLabel;
+    LabelDoc2: TLabel;
+    Label37: TLabel;
+    Label42: TLabel;
+    EditRG: TEdit;
+    MaskEditCPF: TMaskEdit;
+    Edit1: TEdit;
+    Edit2: TEdit;
+    GroupBox1: TGroupBox;
+    Label14: TLabel;
+    Label22: TLabel;
+    Label23: TLabel;
+    Label24: TLabel;
+    Label25: TLabel;
+    Label26: TLabel;
+    Label64: TLabel;
+    Label65: TLabel;
+    Label86: TLabel;
+    MaskEditCEP: TRMaskEdit;
+    EditEndereco: TREdit;
+    EditNumero: TREdit;
+    EditComplemento: TREdit;
+    EditBairro: TREdit;
+    BitBtn2: TBitBtn;
+    EditCidade: TREdit;
+    EditUF: TREdit;
+    EditCodIBGE: TEdit;
+    ToolBar11: TToolBar;
+    ToolButton10: TToolButton;
+    BitBtn1: TBitBtn;
+    EdPonto: TREdit;
+    MaskEditTelCel: TRMaskEdit;
+    EditEmail: TRMaskEdit;
+    BtnEmail: TBitBtn;
+    CkPesq: TCheckBox;
+    Label2: TLabel;
+    Label3: TLabel;
     procedure FormCreate(Sender: TObject);
+    procedure ToolButton1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -104,6 +144,8 @@ var
   fClientes: TfClientes;
 
 implementation
+
+uses uDm;
 
 {$R *.dfm}
 
@@ -117,6 +159,12 @@ begin
   FQuery := Query;
   TUniQuery(FQuery).SQL.Text := CreateSelect;
   FNovoFocusControl:= EditNome;
+end;
+
+procedure TfClientes.ToolButton1Click(Sender: TObject);
+begin
+  inherited;
+  Close;
 end;
 
 end.

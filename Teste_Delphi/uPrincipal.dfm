@@ -159,6 +159,7 @@ object fPrincipal: TfPrincipal
     Height = 153
     Caption = 'Cadastro de Clientes - Teste Principal'
     TabOrder = 0
+    OnClick = BtnPrincClick
   end
   object JvXPButton1: TJvXPButton
     Left = 8
