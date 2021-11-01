@@ -73,6 +73,8 @@ type
     QueryDESC_STATUS: TStringField;
     QueryFIM_CONTINGENCIA: TIntegerField;
     QueryDESC_STATUS_CLI: TStringField;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
     GrEmail: TGroupBox;
     Label68: TLabel;
     Label69: TLabel;
@@ -81,7 +83,6 @@ type
     Label72: TLabel;
     Label73: TLabel;
     Label9: TLabel;
-    Label1: TLabel;
     EditNome: TEdit;
     edtSmtpPort: TEdit;
     edtSmtpUser: TEdit;
@@ -90,9 +91,6 @@ type
     cbEmailSSL: TCheckBox;
     mmEmailMsg: TMemo;
     EditCodigo: TEdit;
-    CbUsuario: TSQLCombo;
-    ToolBar3: TToolBar;
-    ToolButton2: TToolButton;
     cbEmailTLS: TCheckBox;
     cbEmailHTML: TCheckBox;
     procedure FormCreate(Sender: TObject);
