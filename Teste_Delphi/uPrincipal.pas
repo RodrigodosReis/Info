@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.pngimage, Vcl.ExtCtrls,
-  JvExControls, JvXPCore, JvXPButtons;
+  JvExControls, JvXPCore, JvXPButtons, Vcl.StdCtrls;
 
 type
   TfPrincipal = class(TForm)
@@ -14,6 +14,7 @@ type
     JvXPButton1: TJvXPButton;
     JvXPButton2: TJvXPButton;
     JvXPButton3: TJvXPButton;
+    CkRAM: TCheckBox;
     procedure JvXPButton1Click(Sender: TObject);
     procedure BtnPrincClick(Sender: TObject);
   private
@@ -29,11 +30,15 @@ implementation
 
 {$R *.dfm}
 
-uses uDetalhes, uClientes;
+uses uDetalhes, uClientes, uDM;
 
 procedure TfPrincipal.BtnPrincClick(Sender: TObject);
 begin
   Application.CreateForm(TfClientes, fClientes);
+  if CkRAM.Checked then
+    vDadosRAM := 1
+   else
+    vDadosRAM := 0;
   try
     fClientes.ShowModal;
   finally

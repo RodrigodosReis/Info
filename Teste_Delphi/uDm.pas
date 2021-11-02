@@ -31,6 +31,9 @@ type
 var
   DM: TDM;
 
+var
+  vDadosRAM: Integer;
+
 function DateConvert(Date: string): string;
 function ReplaceDotMonet(Str: string): string; //Mandar para o Banco
 function ReplaceDot(Str: string): string; //Mandar para o Banco

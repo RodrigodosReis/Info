@@ -27,7 +27,7 @@ object frmModeloCad: TfrmModeloCad
     Top = 0
     Width = 585
     Height = 416
-    ActivePage = TabCadastro
+    ActivePage = TabPesquisa
     Align = alClient
     TabOrder = 0
     OnChanging = PageControlChanging

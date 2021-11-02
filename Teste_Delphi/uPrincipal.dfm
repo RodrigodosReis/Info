@@ -186,4 +186,19 @@ object fPrincipal: TfPrincipal
     Caption = 'Cadastro de Clientes - Op'#231#227'o Multicamadas'
     TabOrder = 3
   end
+  object CkRAM: TCheckBox
+    Tag = 5
+    Left = 28
+    Top = 72
+    Width = 285
+    Height = 17
+    Caption = 'Marque para usar dados em mem'#243'ria ao inv'#233's de SGBD!'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 4
+  end
 end

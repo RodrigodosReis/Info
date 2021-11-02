@@ -232,6 +232,7 @@ inherited fClientes: TfClientes
           inherited BtnVoltar: TToolButton
             Left = 280
             OnClick = BtnVoltarClick
+            ExplicitLeft = 280
             ExplicitWidth = 56
             ExplicitHeight = 52
           end
@@ -414,7 +415,7 @@ inherited fClientes: TfClientes
         end
         object MaskEditCEP: TRMaskEdit
           Tag = 5
-          Left = 8
+          Left = 6
           Top = 35
           Width = 66
           Height = 21
@@ -436,6 +437,7 @@ inherited fClientes: TfClientes
           ShowHint = True
           TabOrder = 0
           Text = ''
+          OnExit = MaskEditCEPExit
           Valor = 'RMaskEdit1'
           Field = 'CEP'
         end
@@ -666,6 +668,7 @@ inherited fClientes: TfClientes
         ParentShowHint = False
         ShowHint = True
         TabOrder = 9
+        OnClick = BtnEmailClick
       end
       object CkPesq: TCheckBox
         Tag = 5
@@ -800,7 +803,7 @@ inherited fClientes: TfClientes
           Width = 345
           Height = 21
           MaxLength = 100
-          TabOrder = 2
+          TabOrder = 6
         end
         object edtSmtpPass: TEdit
           Left = 360
@@ -808,37 +811,37 @@ inherited fClientes: TfClientes
           Width = 220
           Height = 21
           PasswordChar = '*'
-          TabOrder = 3
+          TabOrder = 7
         end
         object edtEmailAssunto: TEdit
           Left = 11
           Top = 160
           Width = 806
           Height = 21
-          TabOrder = 4
+          TabOrder = 8
         end
         object cbEmailSSL: TCheckBox
-          Left = 603
+          Left = 585
           Top = 39
           Width = 82
           Height = 17
           Caption = 'Usar SSL ?'
-          TabOrder = 5
+          TabOrder = 2
         end
         object mmEmailMsg: TMemo
           Left = 9
           Top = 202
           Width = 808
           Height = 94
-          TabOrder = 6
+          TabOrder = 9
         end
         object cbEmailTLS: TCheckBox
-          Left = 693
+          Left = 662
           Top = 39
           Width = 82
           Height = 17
           Caption = 'Usar TLS ?'
-          TabOrder = 7
+          TabOrder = 3
         end
         object Button1: TButton
           Left = 11
@@ -846,8 +849,8 @@ inherited fClientes: TfClientes
           Width = 283
           Height = 25
           Caption = 'Salvar Configura'#231#227'o'
-          TabOrder = 8
-          OnClick = BtnSalvarClick
+          TabOrder = 12
+          OnClick = Button1Click
         end
         object cbbDefaultCharset: TComboBox
           Left = 11
@@ -855,7 +858,7 @@ inherited fClientes: TfClientes
           Width = 283
           Height = 21
           Style = csDropDownList
-          TabOrder = 9
+          TabOrder = 10
         end
         object cbbIdeCharSet: TComboBox
           Left = 300
@@ -863,7 +866,7 @@ inherited fClientes: TfClientes
           Width = 283
           Height = 21
           Style = csDropDownList
-          TabOrder = 10
+          TabOrder = 11
         end
         object btLerConfig: TButton
           Left = 300
@@ -871,21 +874,30 @@ inherited fClientes: TfClientes
           Width = 283
           Height = 25
           Caption = 'Ler Configura'#231#227'o'
-          TabOrder = 11
+          TabOrder = 13
+          OnClick = btLerConfigClick
         end
-        object Edit2: TEdit
+        object EditExib: TEdit
           Left = 294
           Top = 81
           Width = 522
           Height = 21
-          TabOrder = 12
+          TabOrder = 5
         end
-        object Edit1: TEdit
+        object EditEnvio: TEdit
           Left = 12
           Top = 81
           Width = 276
           Height = 21
-          TabOrder = 13
+          TabOrder = 4
+        end
+        object cbEmailHTML: TCheckBox
+          Left = 740
+          Top = 39
+          Width = 94
+          Height = 17
+          Caption = 'Usar HTML ?'
+          TabOrder = 14
         end
       end
     end
@@ -2126,6 +2138,7 @@ inherited fClientes: TfClientes
     Attempts = 3
     DefaultCharset = UTF_8
     IDECharset = CP1252
+    OnMailException = ACBrMail1MailException
     Left = 330
     Top = 205
   end

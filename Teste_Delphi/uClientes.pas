@@ -11,7 +11,7 @@ uses
   SQLCombo, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client, ACBrBase, ACBrSocket, ACBrCEP, System.IniFiles,
-  ACBrIBGE, System.TypInfo, ACBrMail;
+  ACBrIBGE, System.TypInfo, XMLDoc, XMLIntf, ACBrMail;
 
 type
   TfClientes = class(TfrmModeloCad)
@@ -108,9 +108,10 @@ type
     cbbIdeCharSet: TComboBox;
     btLerConfig: TButton;
     Label4: TLabel;
-    Edit2: TEdit;
+    EditExib: TEdit;
     Label5: TLabel;
-    Edit1: TEdit;
+    EditEnvio: TEdit;
+    cbEmailHTML: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure ToolButton1Click(Sender: TObject);
     procedure BtnNovoClick(Sender: TObject);
@@ -134,6 +135,17 @@ type
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure BtnPesqCepClick(Sender: TObject);
     procedure ACBrCEP1BuscaEfetuada(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure BtnExcluirClick(Sender: TObject);
+    procedure BtnAlterarClick(Sender: TObject);
+    procedure BtnSalvarClick(Sender: TObject);
+    procedure TabCadastroShow(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure btLerConfigClick(Sender: TObject);
+    procedure ACBrMail1MailException(const AMail: TACBrMail; const E: Exception;
+      var ThrowIt: Boolean);
+    procedure MaskEditCEPExit(Sender: TObject);
+    procedure BtnEmailClick(Sender: TObject);
     // Fim Override
 
   private
@@ -141,8 +153,8 @@ type
 
     fCEPAtual: Integer;
 
-//    procedure AjustaParametrosDeEnvio;
-//    procedure LerConfiguracao;
+    procedure AjustaParametrosDeEnvio;
+    procedure LerConfiguracao;
     procedure GravarConfiguracao;
 
   public
@@ -166,22 +178,70 @@ begin
   IniFile := ChangeFileExt(Application.ExeName, '.ini');
   Ini := TIniFile.Create(IniFile);
   try
-{
-    Ini.WriteString('Email', 'From', edtFrom.text);
-    Ini.WriteString('Email', 'FromName', edtFromName.text);
-    Ini.WriteString('Email', 'Host', edtHost.text);
-    Ini.WriteString('Email', 'Port', edtPort.text);
-    Ini.WriteString('Email', 'User', edtUser.text);
-    Ini.WriteString('Email', 'Pass', edtPassword.text);
-    Ini.WriteBool('Email', 'TLS', chkTLS.Checked);
-    Ini.WriteBool('Email', 'SSL', chkSSL.Checked);
+    Ini.WriteString('Email', 'From', EditEnvio.text);
+    Ini.WriteString('Email', 'FromName', EditExib.text);
+    Ini.WriteString('Email', 'Host', EditSMTP.text);
+    Ini.WriteString('Email', 'Port', edtSmtpPort.text);
+    Ini.WriteString('Email', 'User', edtSmtpUser.text);
+    Ini.WriteString('Email', 'Pass', edtSmtpPass.text);
+    Ini.WriteBool('Email', 'TLS', cbEmailTLS.Checked);
+    Ini.WriteBool('Email', 'SSL', cbEmailSSL.Checked);
     Ini.WriteInteger('Email', 'DefaultCharset', cbbDefaultCharset.ItemIndex);
     Ini.WriteInteger('Email', 'IdeCharset', cbbIdeCharSet.ItemIndex);
-}
   finally
     Ini.Free;
   end;
+end;
 
+procedure TfClientes.LerConfiguracao;
+var
+  IniFile: string;
+  Ini: TIniFile;
+begin
+  IniFile := ChangeFileExt(Application.ExeName, '.ini');
+  Ini := TIniFile.Create(IniFile);
+  try
+    EditEnvio.text := Ini.readString('Email', 'From', 'fulano@empresa.com.br');
+    EditExib.text := Ini.readString('Email', 'FromName', 'Fulano de Tal');
+    EditSMTP.text := Ini.readString('Email', 'Host', 'smtp.empresa.com.br');
+    edtSmtpPort.text := Ini.readString('Email', 'Port', '587');
+    edtSmtpUser.text := Ini.readString('Email', 'User', 'fulano@empresa.com.br');
+    edtSmtpPass.text := Ini.readString('Email', 'Pass', 'Sua_Senha_123');
+    cbEmailTLS.Checked := Ini.ReadBool('Email', 'TLS', False);
+    cbEmailSSL.Checked := Ini.ReadBool('Email', 'SSL', False);
+    cbbDefaultCharset.ItemIndex := Ini.ReadInteger('Email', 'DefaultCharset', 27);
+    cbbIdeCharSet.ItemIndex := Ini.ReadInteger('Email', 'IdeCharset', 15);
+  finally
+    Ini.Free;
+  end;
+end;
+
+procedure TfClientes.ACBrMail1MailException(const AMail: TACBrMail;
+  const E: Exception; var ThrowIt: Boolean);
+begin
+  inherited;
+  ShowMessage(E.Message);
+  ThrowIt := False;
+end;
+
+procedure TfClientes.AjustaParametrosDeEnvio;
+begin
+  ACBrMail1.From := EditEnvio.text;
+  ACBrMail1.FromName := EditExib.text;
+  ACBrMail1.Host := EditSMTP.text;
+  ACBrMail1.Username := edtSmtpUser.text;
+  ACBrMail1.Password := edtSmtpPass.text;
+  ACBrMail1.Port := edtSmtpPort.text;
+  ACBrMail1.SetTLS := cbEmailTLS.Checked;
+  ACBrMail1.SetSSL := cbEmailSSL.Checked;
+  ACBrMail1.DefaultCharset := TMailCharset(cbbDefaultCharset.ItemIndex);
+  ACBrMail1.IDECharset := TMailCharset(cbbIdeCharSet.ItemIndex);
+  ACBrMail1.AddAddress(EditEmail.text, EditNome.text);
+  //ACBrMail1.AddCC('outro_email@gmail.com'); // opcional
+  //ACBrMail1.AddReplyTo('um_email'); // opcional
+  //ACBrMail1.AddBCC('um_email'); // opcional
+  //ACBrMail1.Priority := MP_high;
+  //ACBrMail1.ReadingConfirmation := True; // solicita confirmação de leitura
 end;
 
 procedure TfClientes.BtnPesqCepClick(Sender: TObject);
@@ -238,6 +298,35 @@ begin
   end;
 end;
 
+procedure TfClientes.BtnSalvarClick(Sender: TObject);
+begin
+  if vDadosRAM = 1 then
+  begin
+    QueryMem.FieldByName('NOME').AsString := EditNome.Text;
+    QueryMem.FieldByName('RG').AsString := EditRG.Text;
+    QueryMem.FieldByName('CPF').AsString := MaskEditCPF.Text;
+    QueryMem.FieldByName('TELEFONE').AsString := MaskEditTelCel.Text;
+    QueryMem.FieldByName('EMAIL').AsString := EditEmail.Text;
+    QueryMem.FieldByName('CEP').AsString := MaskEditCEP.Text;
+    QueryMem.FieldByName('LOGRADOURO').AsString := EditEndereco.Text;
+    QueryMem.FieldByName('NUMERO').AsString := EditNumero.Text;
+    QueryMem.FieldByName('COMPLEMENTO').AsString := EditComplemento.Text;
+    QueryMem.FieldByName('BAIRRO').AsString := EditBairro.Text;
+    QueryMem.FieldByName('CIDADE').AsString := EditCidade.Text;
+    QueryMem.FieldByName('UF').AsString := EditUF.Text;
+    QueryMem.FieldByName('PAIS').AsString := EditPais.Text;
+    QueryMem.Post;
+    try
+       PageControl.ActivePageIndex := 0;
+    except
+
+    end;
+  end
+  else
+    inherited;
+
+end;
+
 procedure TfClientes.ACBrCEP1BuscaEfetuada(Sender: TObject);
 var
   I : Integer ;
@@ -261,10 +350,150 @@ begin
 
 end;
 
+procedure TfClientes.btLerConfigClick(Sender: TObject);
+begin
+  inherited;
+  LerConfiguracao;
+end;
+
+procedure TfClientes.BtnAlterarClick(Sender: TObject);
+begin
+  inherited;
+  if vDadosRAM = 1 then
+     QueryMem.Edit;
+end;
+
+procedure TfClientes.BtnEmailClick(Sender: TObject);
+var
+  XMLDocument: TXMLDocument;
+  NodeTabela, NodeRegistro, NodeEndereco: IXMLNode;
+  Dir, ArqXML: string;
+  MS: TMemoryStream;
+  P, N, I: Integer;
+begin
+  inherited;
+   if Trim(EditNome.Text) = '' then
+   begin
+       ShowMessage('Preencha o campo Nome para enviar email!');
+       exit;
+   end;
+   if Trim(EditEmail.Text) = '' then
+   begin
+       ShowMessage('Preencha o campo Nome para enviar email!');
+       exit;
+   end;
+
+
+  // cria o xml com os dados
+  XMLDocument := TXMLDocument.Create(Self);
+  try
+    XMLDocument.Active := True;
+    NodeTabela := XMLDocument.AddChild('Cliente');
+
+    NodeRegistro := NodeTabela.AddChild('Pessoa Física');
+    NodeRegistro.ChildValues['Codigo'] := EditCodigo.Text;
+    NodeRegistro.ChildValues['Nome'] := EditNome.Text;
+    NodeRegistro.ChildValues['RG'] := EditRG.Text;
+    NodeRegistro.ChildValues['CPF'] := MaskEditCPF.Text;
+    NodeRegistro.ChildValues['Telefone'] := MaskEditTelCel.Text;
+    NodeRegistro.ChildValues['Email'] := EditEmail.Text;
+    NodeEndereco := NodeRegistro.AddChild('Endereço');
+    NodeEndereco.ChildValues['CEP'] := MaskEditCEP.Text;
+    NodeEndereco.ChildValues['Logradouro'] := EditEndereco.Text;
+    NodeEndereco.ChildValues['Numero'] := EditNumero.Text;
+    NodeEndereco.ChildValues['Complemento'] := EditComplemento.Text;
+    NodeEndereco.ChildValues['Cidade'] := EditCidade.Text;
+    NodeEndereco.ChildValues['UF'] := EditUF.Text;
+    NodeEndereco.ChildValues['País'] := EditPais.Text;
+
+    XMLDocument.SaveToFile(EditNome.Text + '.xml');
+  finally
+    XMLDocument.Free;
+  end;
+
+  // Envia email - não valida os dados de conf pois já vem pre prenchidos - caso bug,o erro virá com os dados de conf
+
+  Dir := ExtractFilePath(ParamStr(0));
+
+  // monta o texto do emai no memo
+  mmEmailMsg.Clear;
+  mmEmailMsg.Lines.Add(' ');
+  mmEmailMsg.Lines.Add(' -- Dados do cadastro desse Cliente -- ');
+  mmEmailMsg.Lines.Add(' ');
+
+
+  P := pos(' - ', edtEmailAssunto.Text);
+  if P > 0 then
+  begin
+    N := StrToIntDef(copy(edtEmailAssunto.Text, P + 3, 5), 0) + 1;
+    edtEmailAssunto.Text := copy(edtEmailAssunto.Text, 1, P + 2) + IntToStr(N);
+  end;
+
+  ACBrMail1.Clear;
+  ACBrMail1.IsHTML := cbEmailHTML.Checked;
+  ACBrMail1.Subject := edtEmailAssunto.Text;
+
+  AjustaParametrosDeEnvio;
+
+  // mensagem principal do e-mail. pode ser html ou texto puro
+  if cbEmailHTML.Checked then
+    ACBrMail1.Body.Assign(mmEmailMsg.Lines)
+   else
+    ACBrMail1.AltBody.Assign(mmEmailMsg.Lines);
+
+  if cbUsarHTML.Checked and cbAddImgHTML.Checked then
+  begin
+    // Depende de: "<img src='cid:LogoACBr'>" em ACBrMail1.Body;
+    if Pos('cid:LogoACBr', ACBrMail1.Body.Text) > 0 then
+      ACBrMail1.AddAttachment(Dir + 'acbr_logo2.png', 'LogoACBr', adInline);
+  end;
+
+  if cbAddImgAtt.Checked then
+    ACBrMail1.AddAttachment(Dir + 'acbr_logo.jpg', '', adAttachment);
+
+  if cbAddPDF.Checked then
+    ACBrMail1.AddAttachment(Dir + '35150905481336000137550010000111291000111298-nfe.pdf', 'DANFE', adAttachment);
+
+  if cbAddXML.Checked then
+  begin
+    MS := TMemoryStream.Create;
+    try
+      ArqXML := '35150905481336000137550010000111291000111298-nfe.xml';
+      MS.LoadFromFile(Dir + ArqXML);
+      ACBrMail1.AddAttachment(MS, ArqXML, adAttachment);
+    finally
+      MS.Free;
+    end;
+  end;
+
+  ACBrMail1.Send(cbUsarThread.Checked);
+
+end;
+
+procedure TfClientes.BtnExcluirClick(Sender: TObject);
+begin
+  if vDadosRAM = 1 then
+  begin
+    QueryMem.Delete;
+    try
+     PageControl.ActivePageIndex := 0;
+    except
+
+    end;
+  end
+  else
+  begin
+    inherited;
+  end;
+
+end;
+
 procedure TfClientes.BtnNovoClick(Sender: TObject);
 begin
   inherited;
-   if EditNome.CanFocus then
+  if vDadosRAM = 1 then
+     QueryMem.Append;
+  if EditNome.CanFocus then
       EditNome.SetFocus;
 end;
 
@@ -273,6 +502,7 @@ var
   m: TMailCharset;
 begin
   inherited;
+  vDadosRAM := 0;
   cbbDefaultCharset.Items.Clear;
   for m := Low(TMailCharset) to High(TMailCharset) do
     cbbDefaultCharset.Items.Add(GetEnumName(TypeInfo(TMailCharset), integer(m)));
@@ -296,6 +526,37 @@ begin
     Key := #0;
     Perform(WM_NEXTDLGCTL, 0, 0);
   end;
+end;
+
+procedure TfClientes.FormShow(Sender: TObject);
+begin
+  LerConfiguracao;
+  inherited;
+  if vDadosRAM = 1 then
+  begin
+     QueryMem.Close;
+     QueryMem.Open;
+     DataSource.DataSet := QueryMem;
+  end;
+end;
+
+procedure TfClientes.TabCadastroShow(Sender: TObject);
+begin
+  if vDadosRAM = 1 then
+  begin
+    BtnAlterar.Enabled := FPermission[3];
+    BtnExcluir.Enabled := FPermission[4];
+    CompleteCampos;
+    Operation := opDataOut;
+    EnableCadastro(False);
+    BtnSalvar.Enabled := False;
+    BtnCancelar.Enabled := False;
+    StatusBar.SimpleText := '';
+    BtnNovo.Enabled := FPermission[2];
+  end
+  else
+    inherited;
+
 end;
 
 procedure TfClientes.ToolButton1Click(Sender: TObject);
@@ -322,6 +583,12 @@ begin
   except
 
   end;
+end;
+
+procedure TfClientes.Button1Click(Sender: TObject);
+begin
+  inherited;
+  GravarConfiguracao;
 end;
 
 procedure TfClientes.ClearPesqFields;
@@ -385,26 +652,56 @@ begin
 
 end;
 
+procedure TfClientes.MaskEditCEPExit(Sender: TObject);
+begin
+  inherited;
+  BtnPesqCep.Click;
+end;
+
 procedure TfClientes.CompleteCampos;
 begin
   inherited;
 
-  FKeyValue[1] := Query.FieldByName('CODIGO').AsString;
-//  FKeyValue[2] := Query.FieldByName('EMPRESA').AsString;    // Caso se use chave composta
-  EditCodigo.Text := Query.FieldByName('CODIGO').AsString;
-  EditNome.Text := Query.FieldByName('NOME').AsString;
-  EditRG.Text := Query.FieldByName('RG').AsString;
-  MaskEditCPF.Text := Query.FieldByName('CPF').AsString;
-  MaskEditTelCel.Text := Query.FieldByName('TELEFONE').AsString;
-  EditEmail.Text := Query.FieldByName('EMAIL').AsString;
-  MaskEditCEP.Text := Query.FieldByName('CEP').AsString;
-  EditEndereco.Text := Query.FieldByName('LOGRADOURO').AsString;
-  EditNumero.Text := Query.FieldByName('NUMERO').AsString;
-  EditComplemento.Text := Query.FieldByName('COMPLEMENTO').AsString;
-  EditBairro.Text := Query.FieldByName('BAIRRO').AsString;
-  EditCidade.Text := Query.FieldByName('CIDADE').AsString;
-  EditUF.Text := Query.FieldByName('UF').AsString;
-  EditPais.Text := Query.FieldByName('PAIS').AsString;
+  if vDadosRAM = 1 then
+  begin
+    FKeyValue[1] := QueryMem.FieldByName('CODIGO').AsString;
+  //  FKeyValue[2] := QueryMem.FieldByName('EMPRESA').AsString;    // Caso se use chave composta
+    EditCodigo.Text := QueryMem.FieldByName('CODIGO').AsString;
+    EditNome.Text := QueryMem.FieldByName('NOME').AsString;
+    EditRG.Text := QueryMem.FieldByName('RG').AsString;
+    MaskEditCPF.Text := QueryMem.FieldByName('CPF').AsString;
+    MaskEditTelCel.Text := QueryMem.FieldByName('TELEFONE').AsString;
+    EditEmail.Text := QueryMem.FieldByName('EMAIL').AsString;
+    MaskEditCEP.Text := QueryMem.FieldByName('CEP').AsString;
+    EditEndereco.Text := QueryMem.FieldByName('LOGRADOURO').AsString;
+    EditNumero.Text := QueryMem.FieldByName('NUMERO').AsString;
+    EditComplemento.Text := QueryMem.FieldByName('COMPLEMENTO').AsString;
+    EditBairro.Text := QueryMem.FieldByName('BAIRRO').AsString;
+    EditCidade.Text := QueryMem.FieldByName('CIDADE').AsString;
+    EditUF.Text := QueryMem.FieldByName('UF').AsString;
+    EditPais.Text := QueryMem.FieldByName('PAIS').AsString;
+  end
+  else
+  begin
+    FKeyValue[1] := Query.FieldByName('CODIGO').AsString;
+  //  FKeyValue[2] := Query.FieldByName('EMPRESA').AsString;    // Caso se use chave composta
+    EditCodigo.Text := Query.FieldByName('CODIGO').AsString;
+    EditNome.Text := Query.FieldByName('NOME').AsString;
+    EditRG.Text := Query.FieldByName('RG').AsString;
+    MaskEditCPF.Text := Query.FieldByName('CPF').AsString;
+    MaskEditTelCel.Text := Query.FieldByName('TELEFONE').AsString;
+    EditEmail.Text := Query.FieldByName('EMAIL').AsString;
+    MaskEditCEP.Text := Query.FieldByName('CEP').AsString;
+    EditEndereco.Text := Query.FieldByName('LOGRADOURO').AsString;
+    EditNumero.Text := Query.FieldByName('NUMERO').AsString;
+    EditComplemento.Text := Query.FieldByName('COMPLEMENTO').AsString;
+    EditBairro.Text := Query.FieldByName('BAIRRO').AsString;
+    EditCidade.Text := Query.FieldByName('CIDADE').AsString;
+    EditUF.Text := Query.FieldByName('UF').AsString;
+    EditPais.Text := Query.FieldByName('PAIS').AsString;
+  end;
+
+
 
 end;
 
@@ -417,7 +714,7 @@ function TfClientes.CreateInsert: String;
 var Preview, Imp_1_Linha: Integer;
 begin
 
-  Result := ' INSERT INTO CLIENTES (CODIGO, NOME, RG, CPF, TELEFONE, EMAIL, CEP ' +
+  Result := ' INSERT INTO CLIENTES (CODIGO, NOME, RG, CPF, TELEFONE, EMAIL, CEP,' +
             ' LOGRADOURO, NUMERO, COMPLEMENTO, BAIRRO, CIDADE, UF, PAIS) ' +
             ' VALUES ( ' +
             ' (SELECT COALESCE(MAX(CODIGO),0) + 1 FROM CLIENTES), ' +
@@ -425,6 +722,7 @@ begin
             DM.DBFormat(EditRG.Text,dbTexto) + ',' +
             DM.DBFormat(MaskEditCPF.Text,dbTexto) + ',' +
             DM.DBFormat(MaskEditTelCel.Text,dbTexto) + ',' +
+            DM.DBFormat(EditEmail.Text,dbTexto) + ',' +
             DM.DBFormat(MaskEditCEP.Text,dbTexto) + ',' +
             DM.DBFormat(EditEndereco.Text,dbTexto) + ',' +
             DM.DBFormat(EditNumero.Text,dbTexto) + ',' +
@@ -491,5 +789,7 @@ begin
   DBGridDadosTerc.Canvas.FillRect(Rect);
   DBGridDadosTerc.DefaultDrawColumnCell(Rect, DataCol, Column, State);
 end;
+
+
 
 end.
