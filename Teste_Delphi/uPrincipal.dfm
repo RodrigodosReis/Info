@@ -177,6 +177,7 @@ object fPrincipal: TfPrincipal
     Height = 81
     Caption = 'Cadastro de Clientes - Op'#231#227'o MVC'
     TabOrder = 2
+    OnClick = JvXPButton2Click
   end
   object JvXPButton3: TJvXPButton
     Left = 636
@@ -185,6 +186,7 @@ object fPrincipal: TfPrincipal
     Height = 81
     Caption = 'Cadastro de Clientes - Op'#231#227'o Multicamadas'
     TabOrder = 3
+    OnClick = JvXPButton3Click
   end
   object CkRAM: TCheckBox
     Tag = 5

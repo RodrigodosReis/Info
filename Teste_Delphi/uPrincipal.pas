@@ -17,6 +17,8 @@ type
     CkRAM: TCheckBox;
     procedure JvXPButton1Click(Sender: TObject);
     procedure BtnPrincClick(Sender: TObject);
+    procedure JvXPButton2Click(Sender: TObject);
+    procedure JvXPButton3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -30,7 +32,7 @@ implementation
 
 {$R *.dfm}
 
-uses uDetalhes, uClientes, uDM;
+uses uDetalhes, uClientes, uDM, uDetalhes2, uDetalhes3;
 
 procedure TfPrincipal.BtnPrincClick(Sender: TObject);
 begin
@@ -53,6 +55,26 @@ begin
     fDetalhes.ShowModal;
   finally
     FreeAndNil(fDetalhes);
+  end;
+end;
+
+procedure TfPrincipal.JvXPButton2Click(Sender: TObject);
+begin
+  Application.CreateForm(TfDetalhes2, fDetalhes2);
+  try
+    fDetalhes2.ShowModal;
+  finally
+    FreeAndNil(fDetalhes2);
+  end;
+end;
+
+procedure TfPrincipal.JvXPButton3Click(Sender: TObject);
+begin
+  Application.CreateForm(TfDetalhes3, fDetalhes3);
+  try
+    fDetalhes3.ShowModal;
+  finally
+    FreeAndNil(fDetalhes3);
   end;
 end;
 

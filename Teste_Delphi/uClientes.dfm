@@ -10,7 +10,6 @@ inherited fClientes: TfClientes
   inherited PageControl: TPageControl
     Width = 848
     Height = 439
-    ActivePage = TabSheet1
     Font.Charset = ANSI_CHARSET
     Font.Name = 'Tahoma'
     ParentFont = False
