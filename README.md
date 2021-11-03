@@ -64,13 +64,9 @@ ssl : false;
 
 password: não use a senha padrão da conta, precisará criar uma exclusiva para sua aplicação.
 
-siga os passos abaixo:
-
-criada pelo link https://login.yahoo.com/account/security#less-secure-apps
+siga os passos abaixo: criada pelo link https://login.yahoo.com/account/security#less-secure-apps
 
 e depois 'Gerenciar Senha de app', selecione 'Outro app' ,der um nome ao app, e clique gerar senha.;
-
-Veja ainda, a dica desse Post
 
 
 sendgrid
