@@ -530,7 +530,6 @@ end;
 
 procedure TfClientes.FormShow(Sender: TObject);
 begin
-  LerConfiguracao;
   inherited;
   if vDadosRAM = 1 then
   begin
@@ -538,6 +537,7 @@ begin
      QueryMem.Open;
      DataSource.DataSet := QueryMem;
   end;
+  LerConfiguracao;
 end;
 
 procedure TfClientes.TabCadastroShow(Sender: TObject);

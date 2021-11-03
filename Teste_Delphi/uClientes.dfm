@@ -903,6 +903,7 @@ inherited fClientes: TfClientes
     object TabSheet2: TTabSheet
       Caption = 'Configura'#231#227'o de SGBD &Firebird '
       ImageIndex = 3
+      TabVisible = False
     end
   end
   inherited Pop: TPopupMenu
