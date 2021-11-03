@@ -465,6 +465,7 @@ begin
   try
     ACBrMail1.Send(False);
   finally
+    DeleteFile(ArqXML);
     ShowMessage('Email enviado com sucesso!');
   end;
 

@@ -390,21 +390,21 @@ begin
     XMLDocument.Active := True;
     NodeTabela := XMLDocument.AddChild('Cliente');
 
-    NodeRegistro := NodeTabela.AddChild('Pessoa Física');
+    NodeRegistro := NodeTabela.AddChild('Dados');
     NodeRegistro.ChildValues['Codigo'] := EditCodigo.Text;
     NodeRegistro.ChildValues['Nome'] := EditNome.Text;
     NodeRegistro.ChildValues['RG'] := EditRG.Text;
     NodeRegistro.ChildValues['CPF'] := MaskEditCPF.Text;
     NodeRegistro.ChildValues['Telefone'] := MaskEditTelCel.Text;
     NodeRegistro.ChildValues['Email'] := EditEmail.Text;
-    NodeEndereco := NodeRegistro.AddChild('Endereço');
+    NodeEndereco := NodeRegistro.AddChild('Endereco');
     NodeEndereco.ChildValues['CEP'] := MaskEditCEP.Text;
     NodeEndereco.ChildValues['Logradouro'] := EditEndereco.Text;
     NodeEndereco.ChildValues['Numero'] := EditNumero.Text;
     NodeEndereco.ChildValues['Complemento'] := EditComplemento.Text;
     NodeEndereco.ChildValues['Cidade'] := EditCidade.Text;
     NodeEndereco.ChildValues['UF'] := EditUF.Text;
-    NodeEndereco.ChildValues['País'] := EditPais.Text;
+    NodeEndereco.ChildValues['Pais'] := EditPais.Text;
 
     XMLDocument.SaveToFile(EditNome.Text + '.xml');
   finally
@@ -415,12 +415,23 @@ begin
 
   Dir := ExtractFilePath(ParamStr(0));
 
-  // monta o texto do emai no memo
+  // monta o texto do email no memo
   mmEmailMsg.Clear;
   mmEmailMsg.Lines.Add(' ');
   mmEmailMsg.Lines.Add(' -- Dados do cadastro desse Cliente -- ');
   mmEmailMsg.Lines.Add(' ');
-
+  mmEmailMsg.Lines.Add(' ');
+  mmEmailMsg.Lines.Add(' Nome: ' + EditNome.Text);
+  mmEmailMsg.Lines.Add(' RG: ' + EditRG.Text);
+  mmEmailMsg.Lines.Add(' CPF: ' + MaskEditCPF.Text);
+  mmEmailMsg.Lines.Add(' Telefone: ' + MaskEditTelCel.Text);
+  mmEmailMsg.Lines.Add(' Email: ' + EditEmail.Text);
+  mmEmailMsg.Lines.Add(' ');
+  mmEmailMsg.Lines.Add(' CEP: ' + MaskEditCEP.Text);
+  mmEmailMsg.Lines.Add(' Logradouro: ' + EditEndereco.Text + ' Número: ' + EditNumero.Text);
+  mmEmailMsg.Lines.Add(' Complemento: ' + EditComplemento.Text);
+  mmEmailMsg.Lines.Add(' Bairro: ' + EditBairro.Text);
+  mmEmailMsg.Lines.Add(' Cidade: ' + EditCidade.Text + ' UF: ' + EditUF.Text + ' País: ' + EditPais.Text );
 
   P := pos(' - ', edtEmailAssunto.Text);
   if P > 0 then
@@ -441,32 +452,21 @@ begin
    else
     ACBrMail1.AltBody.Assign(mmEmailMsg.Lines);
 
-  if cbUsarHTML.Checked and cbAddImgHTML.Checked then
-  begin
-    // Depende de: "<img src='cid:LogoACBr'>" em ACBrMail1.Body;
-    if Pos('cid:LogoACBr', ACBrMail1.Body.Text) > 0 then
-      ACBrMail1.AddAttachment(Dir + 'acbr_logo2.png', 'LogoACBr', adInline);
+  // Anexar XML
+  MS := TMemoryStream.Create;
+  try
+    ArqXML := EditNome.Text + '.xml';
+    MS.LoadFromFile(Dir + ArqXML);
+    ACBrMail1.AddAttachment(MS, ArqXML, adAttachment);
+  finally
+    MS.Free;
   end;
 
-  if cbAddImgAtt.Checked then
-    ACBrMail1.AddAttachment(Dir + 'acbr_logo.jpg', '', adAttachment);
-
-  if cbAddPDF.Checked then
-    ACBrMail1.AddAttachment(Dir + '35150905481336000137550010000111291000111298-nfe.pdf', 'DANFE', adAttachment);
-
-  if cbAddXML.Checked then
-  begin
-    MS := TMemoryStream.Create;
-    try
-      ArqXML := '35150905481336000137550010000111291000111298-nfe.xml';
-      MS.LoadFromFile(Dir + ArqXML);
-      ACBrMail1.AddAttachment(MS, ArqXML, adAttachment);
-    finally
-      MS.Free;
-    end;
+  try
+    ACBrMail1.Send(False);
+  finally
+    ShowMessage('Email enviado com sucesso!');
   end;
-
-  ACBrMail1.Send(cbUsarThread.Checked);
 
 end;
 
@@ -530,7 +530,6 @@ end;
 
 procedure TfClientes.FormShow(Sender: TObject);
 begin
-  LerConfiguracao;
   inherited;
   if vDadosRAM = 1 then
   begin
@@ -538,6 +537,7 @@ begin
      QueryMem.Open;
      DataSource.DataSet := QueryMem;
   end;
+  LerConfiguracao;
 end;
 
 procedure TfClientes.TabCadastroShow(Sender: TObject);
