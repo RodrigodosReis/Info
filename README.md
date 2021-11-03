@@ -13,15 +13,24 @@ Não foi implementada nem testada a pesquisa em tela na versão memória até o 
 Porém na versão Firebird foi implementada
 
 Para enviar o email com os dados e o anexo XML, é preciso pressionar o botão de Email após o campo de email,após finalizar o cadastro!
+
 Para pesquisar CEPs é preciso apenas incluir o CEP e dar um TAB ou Enter ou pressionar o botão ao lado do campo!
 
 - Para configuração do email a ser enviado, é necessário preencher a aba de configurações de email. Segue sugestões de configurações para os principais serviços de email do mercado:
 
 outlook
 smtp: smtp.office365.com
+
+
 porta: 587
+
+
 tsl : true;
+
+
 ssl : false;
+
+
 
 hotmail
 smtp: smtp.live.com
